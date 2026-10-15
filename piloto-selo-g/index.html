@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel | Piloto de Prospecção Selo G</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:#203246;background:#f4f6f9}*{box-sizing:border-box}body{margin:0}header{background:#132940;color:white;padding:24px max(20px,calc((100vw - 1040px)/2))}header small{color:#c0d3df}main{max-width:1040px;margin:auto;padding:28px 18px}h1{margin:9px 0;font-size:clamp(1.5rem,3vw,2.1rem)}h2{font-size:1.15rem}p{line-height:1.5}section{background:white;padding:22px;border:1px solid #dce3e9;border-radius:12px;margin-bottom:20px}.notice{background:#fff8e6;border-left:4px solid #c99540;padding:14px;border-radius:6px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.metric{background:#edf3f7;border-radius:10px;padding:16px}.metric strong{display:block;font-size:1.75rem}.metric span{font-size:.85rem}label{display:flex;justify-content:space-between;font-weight:650;margin-bottom:8px}input[type=range]{width:100%;accent-color:#276b8d}.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px}button{background:#123d5a;color:white;border:0;border-radius:8px;padding:12px 17px;cursor:pointer;font-weight:600;margin-right:8px}button.secondary{background:#e5edf2;color:#123d5a}small{color:#596978}.bar{height:18px;background:#e4edf2;border-radius:12px;overflow:hidden;margin-top:9px}.bar div{height:100%;background:#3d8097;transition:width .2s}.row{margin:14px 0}footer{font-size:.85rem;color:#5a6877;padding:10px 0 30px}@media(max-width:680px){.grid,.controls{grid-template-columns:1fr 1fr}}@media(max-width:460px){.grid,.controls{grid-template-columns:1fr}}@media print{button,input{display:none!important}body{background:white}}
+</style></head><body><header><small>PAINEL CENTRAL • MÓDULO DE PROSPECÇÃO</small><h1>Piloto de Prospecção — Selo G</h1><div>Simulador de resultados e indicadores do funil</div></header>
+<main><div class="notice"><strong>Simulação, não operação real.</strong> Os valores exibidos são hipóteses editáveis. Não representam empresas contatadas nem resultados verificados. Nenhum dado é enviado a servidores.</div>
+<section><h2>Parâmetros do piloto</h2><div class="controls">
+<div><label for="grupos">Grupos autorizados <output id="gruposValor"></output></label><input type="range" id="grupos" min="0" max="15" step="1" value="3"></div>
+<div><label for="visitas">Visitas ao portal <output id="visitasValor"></output></label><input type="range" id="visitas" min="0" max="600" step="10" value="120"></div>
+<div><label for="interessados">Empresas interessadas <output id="interessadosValor"></output></label><input type="range" id="interessados" min="0" max="120" step="1" value="12"></div>
+<div><label for="reunioes">Conversas solicitadas <output id="reunioesValor"></output></label><input type="range" id="reunioes" min="0" max="60" step="1" value="4"></div>
+</div></section>
+<section><h2>Indicadores projetados</h2><div class="grid">
+<div class="metric"><span>Grupos autorizados</span><strong id="vGrupos">3</strong></div>
+<div class="metric"><span>Visitas por grupo</span><strong id="vPorGrupo">40</strong></div>
+<div class="metric"><span>Conversão em interesse</span><strong id="txInteresse">10,0%</strong></div>
+<div class="metric"><span>Conversão em conversa</span><strong id="txReuniao">33,3%</strong></div>
+</div><div class="row"><label>Visitas → interesse <span id="porcInteresse"></span></label><div class="bar"><div id="barraInteresse"></div></div></div>
+<div class="row"><label>Interessados → conversas <span id="porcReuniao"></span></label><div class="bar"><div id="barraReuniao"></div></div></div>
+<small id="alerta"></small></section>
+<section><h2>Exportação do cenário</h2><p>Exporte hipóteses para posterior comparação com os dados reais do piloto. Este módulo não é um CRM.</p><button id="exportar">Exportar cenário CSV</button><button id="imprimir" class="secondary">Imprimir / salvar PDF</button><button id="reiniciar" class="secondary">Restaurar valores</button></section>
+<footer>Selo G — Reconhecimento em Gestão Psicossocial. Ferramenta de simulação interna. Reconhecimento institucional independente de contratação comercial.</footer></main>
+<script>
+const ids=['grupos','visitas','interessados','reunioes'];const defaults={grupos:3,visitas:120,interessados:12,reunioes:4};
+const nf=new Intl.NumberFormat('pt-BR');const percent=(a,b)=>b>0?(100*a/b).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%':'—';
+function values(){return Object.fromEntries(ids.map(id=>[id,Number(document.getElementById(id).value)]));}
+function render(){const v=values();ids.forEach(id=>document.getElementById(id+'Valor').textContent=nf.format(v[id]));document.getElementById('vGrupos').textContent=nf.format(v.grupos);document.getElementById('vPorGrupo').textContent=v.grupos?nf.format(Math.round(v.visitas/v.grupos)):'—';document.getElementById('txInteresse').textContent=percent(v.interessados,v.visitas);document.getElementById('txReuniao').textContent=percent(v.reunioes,v.interessados);
+document.getElementById('porcInteresse').textContent=percent(v.interessados,v.visitas);document.getElementById('porcReuniao').textContent=percent(v.reunioes,v.interessados);document.getElementById('barraInteresse').style.width=Math.min(100,v.visitas?100*v.interessados/v.visitas:0)+'%';document.getElementById('barraReuniao').style.width=Math.min(100,v.interessados?100*v.reunioes/v.interessados:0)+'%';
+document.getElementById('alerta').textContent=(v.interessados>v.visitas?'Atenção: interessados superam visitas. ':'')+(v.reunioes>v.interessados?'Atenção: conversas superam interessados. ':'');}
+ids.forEach(id=>document.getElementById(id).addEventListener('input',render));
+document.getElementById('reiniciar').addEventListener('click',()=>{ids.forEach(id=>document.getElementById(id).value=defaults[id]);render()});
+document.getElementById('imprimir').addEventListener('click',()=>window.print());
+document.getElementById('exportar').addEventListener('click',()=>{const v=values(),rows=[['indicador','valor'],...Object.entries(v),['visitas_por_grupo',v.grupos?(v.visitas/v.grupos).toFixed(2):''],['conversao_interesse',percent(v.interessados,v.visitas)],['conversao_conversa',percent(v.reunioes,v.interessados)]];const csv='\uFEFF'+rows.map(r=>r.join(';')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download='selo-g-cenario-piloto.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);});
+render();</script></body></html>
