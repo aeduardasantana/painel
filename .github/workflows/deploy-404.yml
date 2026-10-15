@@ -1,0 +1,47 @@
+name: Publicar página de erro na Locaweb
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '404.html'
+      - '.htaccess'
+      - '.github/workflows/deploy-404.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar arquivos
+        uses: actions/checkout@v4
+
+      - name: Validar configuração FTP
+        env:
+          FTP_HOST: ${{ secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.LOCAWEB_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.LOCAWEB_FTP_PASSWORD }}
+        run: |
+          test -n "$FTP_HOST" && test -n "$FTP_USER" && test -n "$FTP_PASSWORD" || {
+            echo "::error::Configure LOCAWEB_FTP_HOST, LOCAWEB_FTP_USER e LOCAWEB_FTP_PASSWORD nos secrets do repositório."
+            exit 1
+          }
+
+      - name: Instalar cliente FTP
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+
+      - name: Enviar somente arquivos da página 404
+        env:
+          FTP_HOST: ${{ secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.LOCAWEB_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.LOCAWEB_FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<'EOF'
+          set net:max-retries 3
+          set net:timeout 20
+          set ftp:ssl-allow false
+          cd public_html/painel
+          put 404.html -o 404.html
+          put .htaccess -o .htaccess
+          bye
+          EOF
