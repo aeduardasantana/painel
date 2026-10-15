@@ -1,0 +1,49 @@
+name: Publicar módulos Meu Site na Locaweb
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'meusite/**'
+      - 'admsite/**'
+      - 'l/**'
+      - '.github/workflows/deploy-solucoes.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: locaweb-painel-solucoes
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Verificar secrets de FTP
+        env:
+          FTP_HOST: ${{ secrets.HOST || secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.USER || secrets.LOCAWEB_FTP_USER }}
+          FTP_PASS: ${{ secrets.PASS || secrets.LOCAWEB_FTP_PASSWORD }}
+        run: |
+          test -n "$FTP_HOST" && test -n "$FTP_USER" && test -n "$FTP_PASS" || {
+            echo "::error::Configure HOST, USER e PASS nos secrets."
+            exit 1
+          }
+      - name: Instalar lftp
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+      - name: Publicar somente os novos módulos
+        env:
+          FTP_HOST: ${{ secrets.HOST || secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.USER || secrets.LOCAWEB_FTP_USER }}
+          FTP_PASS: ${{ secrets.PASS || secrets.LOCAWEB_FTP_PASSWORD }}
+        run: |
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
+          set net:max-retries 3
+          set net:timeout 20
+          set ftp:ssl-allow false
+          cd public_html/painel
+          mirror -R --only-newer meusite meusite
+          mirror -R --only-newer admsite admsite
+          mirror -R --only-newer l l
+          bye
+          EOF
