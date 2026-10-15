@@ -18,12 +18,12 @@ jobs:
 
       - name: Validar configuração FTP
         env:
-          FTP_HOST: ${{ secrets.LOCAWEB_FTP_HOST }}
-          FTP_USER: ${{ secrets.LOCAWEB_FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.LOCAWEB_FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.HOST || secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.USER || secrets.LOCAWEB_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.PASS || secrets.LOCAWEB_FTP_PASSWORD }}
         run: |
           test -n "$FTP_HOST" && test -n "$FTP_USER" && test -n "$FTP_PASSWORD" || {
-            echo "::error::Configure LOCAWEB_FTP_HOST, LOCAWEB_FTP_USER e LOCAWEB_FTP_PASSWORD nos secrets do repositório."
+            echo "::error::Configure HOST, USER e PASS nos secrets do repositório."
             exit 1
           }
 
@@ -32,9 +32,9 @@ jobs:
 
       - name: Enviar somente arquivos da página 404
         env:
-          FTP_HOST: ${{ secrets.LOCAWEB_FTP_HOST }}
-          FTP_USER: ${{ secrets.LOCAWEB_FTP_USER }}
-          FTP_PASSWORD: ${{ secrets.LOCAWEB_FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.HOST || secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.USER || secrets.LOCAWEB_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.PASS || secrets.LOCAWEB_FTP_PASSWORD }}
         run: |
           lftp -u "$FTP_USER","$FTP_PASSWORD" "$FTP_HOST" <<'EOF'
           set net:max-retries 3
