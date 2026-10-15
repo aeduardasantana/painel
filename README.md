@@ -1,11 +1,18 @@
-# Painel — Diretriz central de soluções
+# Painel — Regra universal de soluções
 
-## Regra executiva (15/10/2026)
+## Diretriz permanente da Presidência (15/10/2026)
 
-Sempre que surgir uma ideia de solução operacional, gerencial, comercial ou analítica para os projetos do GEB, Selo G e iniciativas correlatas, considerar **primeiro** a implementação ou integração com este repositório (`aeduardasantana/painel`), em vez de criar painéis isolados, simulações temporárias ou estruturas paralelas.
+**Aplica-se a TUDO, sem restrição ao Selo G, GEB ou a qualquer projeto específico.**
 
-Exemplo: o painel de indicadores do piloto de prospecção do Selo G deve ser planejado como módulo deste repositório.
+Sempre que surgir uma ideia de solução que envolva painel, sistema de acompanhamento, indicador, controle, dashboard, ferramenta de gestão, fluxo operacional ou módulo digital, **utilizar como ponto de partida o repositório central [aeduardasantana/painel](https://github.com/aeduardasantana/painel)**.
 
-Antes de implementar: verificar a arquitetura existente, reutilizar componentes e dados compatíveis, preservar segregação de acesso e privacidade, e distinguir proposta, desenvolvimento e publicação efetiva.
+Antes de sugerir uma solução independente:
+1. Consultar este repositório e verificar a arquitetura disponível.
+2. Avaliar implementação, reaproveitamento ou integração nele como primeira opção.
+3. Centralizar a experiência de gestão sempre que tecnicamente adequado.
+4. Evitar multiplicar painéis e sistemas paralelos.
+5. Respeitar segurança, segregação dos dados, acesso e governança de cada operação.
 
-Esta diretriz não autoriza publicar dados privados nem altera as regras de independência do reconhecimento Selo G.
+**Escopo:** todas as áreas, iniciativas, marcas, projetos e demandas futuras da usuária. O Selo G é apenas um exemplo de aplicação, não uma limitação.
+
+A regra orienta propostas e implementações; não autoriza modificar sistemas ou publicar dados sem as permissões pertinentes.
