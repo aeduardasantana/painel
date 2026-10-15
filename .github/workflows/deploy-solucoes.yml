@@ -5,7 +5,6 @@ on:
     paths:
       - 'meusite/**'
       - 'admsite/**'
-      - 'l/**'
       - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
 permissions:
@@ -44,6 +43,6 @@ jobs:
           cd public_html/painel
           mirror -R --only-newer meusite meusite
           mirror -R --only-newer admsite admsite
-          mirror -R --only-newer l l
+          rm -f l/index.html
           bye
           EOF
