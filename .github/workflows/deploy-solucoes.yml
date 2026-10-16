@@ -3,7 +3,6 @@ on:
   push:
     branches: [main]
     paths:
-      - 'meusite/**'
       - 'admsite/**'
       - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
@@ -41,7 +40,7 @@ jobs:
           set net:timeout 20
           set ftp:ssl-allow false
           cd public_html/painel
-          mirror -R --only-newer meusite meusite
+          rm -f meusite/index.html
           mirror -R --only-newer admsite admsite
           rm -f l/index.html
           bye
