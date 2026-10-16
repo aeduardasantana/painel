@@ -24,7 +24,7 @@
 (()=>{'use strict';
 const $=s=>document.querySelector(s), form=$('#searchForm'),results=$('#results'), count=$('#count'),loading=$('#loading'),go=$('#go');
 let items=[],filter='all';
-const patterns={all:'["name"]["shop"|"amenity"|"office"|"craft"|"tourism"]',restaurant:'["amenity"~"^(restaurant|cafe|fast_food|bar|pub|food_court)$"]',health:'["amenity"~"^(clinic|doctors|dentist|pharmacy|hospital)$"]',education:'["amenity"~"^(school|college|university|kindergarten|language_school)$"]',construction:'["shop"~"^(hardware|doityourself|building_materials|paint|trade)$"]',beauty:'["shop"~"^(beauty|hairdresser|cosmetics)$"]',retail:'["shop"]',hotel:'["tourism"~"^(hotel|guest_house|hostel|motel)$"]',automotive:'["shop"~"^(car|car_repair|car_parts|tyres|motorcycle)$"]',office:'["office"]'};
+const patterns={all:'[~"^(shop|amenity|office|craft|tourism)$"~".*"]["name"]',restaurant:'["amenity"~"^(restaurant|cafe|fast_food|bar|pub|food_court)$"]',health:'["amenity"~"^(clinic|doctors|dentist|pharmacy|hospital)$"]',education:'["amenity"~"^(school|college|university|kindergarten|language_school)$"]',construction:'["shop"~"^(hardware|doityourself|building_materials|paint|trade)$"]',beauty:'["shop"~"^(beauty|hairdresser|cosmetics)$"]',retail:'["shop"]',hotel:'["tourism"~"^(hotel|guest_house|hostel|motel)$"]',automotive:'["shop"~"^(car|car_repair|car_parts|tyres|motorcycle)$"]',office:'["office"]'};
 function digits(s){return String(s||'').replace(/\D/g,'')}
 function phoneValue(v){return String(v||'').split(/[;,/]/).map(s=>s.trim()).find(Boolean)||''}
 function brNumber(v){let d=digits(v); if(d.startsWith('00'))d=d.slice(2);if(d.length===10||d.length===11)d='55'+d;return d.length>=12&&d.length<=13?d:null}
