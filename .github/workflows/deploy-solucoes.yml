@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'admsite/**'
+      - 'sistemas/**'
       - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
 permissions:
@@ -42,6 +43,7 @@ jobs:
           cd public_html/painel
           rm -f meusite/index.html
           mirror -R --only-newer admsite admsite
+          mirror -R --only-newer sistemas sistemas
           rm -f l/index.html
           bye
           EOF
