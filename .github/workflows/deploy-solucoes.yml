@@ -5,6 +5,7 @@ on:
     paths:
       - 'admsite/**'
       - 'sistemas/**'
+      - 'busca-comercial/**'
       - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
 permissions:
@@ -44,6 +45,7 @@ jobs:
           rm -f meusite/index.html
           mirror -R --only-newer admsite admsite
           mirror -R --only-newer sistemas sistemas
+          mirror -R --only-newer busca-comercial busca-comercial
           rm -f l/index.html
           bye
           EOF
