@@ -4,6 +4,6 @@ DirectoryIndex portal.php
 RewriteEngine On
 RewriteRule ^index\.html$ - [F,L,NC]
 </IfModule>
-<FilesMatch "^\.(?:ht|env)|^(?:\.geb-systems-auth\.php)$">
+<FilesMatch "^\.(?:ht|env)|^(?:\.geb-systems-auth\.php|\.systems-pass\.php)$">
 Require all denied
 </FilesMatch>
