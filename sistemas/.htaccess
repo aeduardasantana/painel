@@ -1,0 +1,9 @@
+Options -Indexes
+DirectoryIndex portal.php
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^index\.html$ - [F,L,NC]
+</IfModule>
+<FilesMatch "^\.(?:ht|env)|^(?:\.geb-systems-auth\.php)$">
+Require all denied
+</FilesMatch>
