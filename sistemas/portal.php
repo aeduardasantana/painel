@@ -26,7 +26,7 @@ if (isset($_POST['logout'])) {
 // Never include plaintext password in repo or in a public web directory.
 $hash = getenv('SYSTEMS_PASS_HASH');
 if (!$hash) {
-    $config = dirname(__DIR__, 2).'/.geb-systems-auth.php';
+    $config = dirname(__DIR__, 3).'/.geb-systems-auth.php';
     if (is_file($config)) {
         $loaded=require $config;
         if (is_string($loaded)) $hash=$loaded;
