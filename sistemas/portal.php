@@ -25,6 +25,14 @@ if (isset($_POST['logout'])) {
 // Configure SYSTEMS_PASS_HASH on server with a password_hash() hash.
 // Never include plaintext password in repo or in a public web directory.
 $hash = getenv('SYSTEMS_PASS_HASH');
+// The deployment workflow may install a protected configuration alongside this gateway.
+if (!$hash) {
+    $localConfig = __DIR__.'/.systems-pass.php';
+    if (is_file($localConfig)) {
+        $loaded = require $localConfig;
+        if (is_string($loaded)) $hash = $loaded;
+    }
+}
 if (!$hash) {
     $config = dirname(__DIR__, 3).'/.geb-systems-auth.php';
     if (is_file($config)) {
