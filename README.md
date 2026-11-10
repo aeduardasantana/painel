@@ -16,3 +16,9 @@ Antes de sugerir uma solução independente:
 **Escopo:** todas as áreas, iniciativas, marcas, projetos e demandas futuras da usuária. O Selo G é apenas um exemplo de aplicação, não uma limitação.
 
 A regra orienta propostas e implementações; não autoriza modificar sistemas ou publicar dados sem as permissões pertinentes.
+
+## Formação executiva — Vocabulário Estratégico
+
+- [Vocabulário Estratégico Executivo (HTML)](./vocabulario-estrategico.html): consulta de 90 termos por área e etapa do negócio, perguntas de aplicação e simulador didático de markup.
+- **Situação:** arquivo incorporado ao repositório central. A integração ao menu do Painel Mestre e a publicação em endereço navegável dependem da localização da interface implantada; o repositório consultado apresenta a diretriz de centralização, mas não expõe a aplicação principal.
+- **Próxima etapa prevista:** modelar indicadores e calculadoras específicas dos braços GEB, com parâmetros próprios e controle de acesso, sem presumir dados reais.
