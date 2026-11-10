@@ -15,7 +15,25 @@ concurrency:
   group: locaweb-painel-solucoes
   cancel-in-progress: true
 jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout e checagem de sintaxe
+        uses: actions/checkout@v4
+      - name: Validar gateways protegidos e páginas de cada braço
+        run: |
+          set -euo pipefail
+          for f in sistemas/portal.php sistemas/pop.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php; do
+            php -l "$f"
+          done
+          grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
+          grep -q 'GEB_PORTAL_SESSION_V2' sistemas/pop.php
+          grep -q 'GEB_PORTAL_SESSION_V2' portfolios/_core.php
+          grep -q 'DirectoryIndex index.php' portfolios/.htaccess
+          grep -q 'Require all denied' portfolios/.htaccess
+          test ! -f portfolios/index.html
   deploy:
+    needs: validar
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,6 +65,9 @@ jobs:
           mirror -R --only-newer admsite admsite
           mirror -R --only-newer sistemas sistemas
           mirror -R --only-newer busca-comercial busca-comercial
+          # Bloquear imediatamente o HTML legado público, antes de subir páginas PHP.
+          put portfolios/.htaccess -o portfolios/.htaccess
+          rm -f portfolios/index.html
           mirror -R --only-newer portfolios portfolios
           rm -f l/index.html
           bye

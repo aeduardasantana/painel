@@ -5,8 +5,8 @@ ini_set('session.use_strict_mode', '1');
 ini_set('session.use_only_cookies', '1');
 ini_set('session.cookie_httponly', '1');
 ini_set('session.cookie_secure', '1');
-session_name('GEB_SYSTEMS_SESSION');
-session_set_cookie_params(['lifetime'=>0,'path'=>'/sistemas/','secure'=>true,'httponly'=>true,'samesite'=>'Lax']);
+session_name('GEB_PORTAL_SESSION_V2');
+session_set_cookie_params(['lifetime'=>0,'path'=>'/','secure'=>true,'httponly'=>true,'samesite'=>'Lax']);
 session_start();
 header('Cache-Control: no-store, no-cache, must-revalidate, private');
 header('X-Content-Type-Options: nosniff');
@@ -16,6 +16,10 @@ header('Content-Security-Policy: frame-ancestors \'none\'');
 if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') {
     http_response_code(403); exit('HTTPS obrigatório.');
 }
+// Only allow post-login redirects to protected internal portfolio paths.
+$returnCandidate=(string)($_POST['next']??$_GET['next']??'');
+$allowedReturn=['/portfolios/','/portfolios/ecoar/','/portfolios/geb-empresarial/'];
+$returnTo=in_array($returnCandidate,$allowedReturn,true)?$returnCandidate:'/sistemas/';
 if (isset($_POST['logout'])) {
     if (hash_equals((string)($_SESSION['csrf'] ?? ''),(string)($_POST['csrf'] ?? ''))) {
         $_SESSION=[]; session_regenerate_id(true);
@@ -58,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['password'])) {
         session_regenerate_id(true);
         $_SESSION['auth']=true; $_SESSION['auth_at']=time();
         $_SESSION['attempts']=0; $_SESSION['csrf']=bin2hex(random_bytes(24));
-        header('Location: /sistemas/'); exit;
+        header('Location: '.$returnTo); exit;
     } else {
         $_SESSION['attempts']=$attempts+1;
         if (!$since) $_SESSION['attempt_since']=time();
@@ -67,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['password'])) {
 }
 $authenticated=($_SESSION['auth']??false)===true
   && time()-(int)($_SESSION['auth_at']??0)<28800;
+if ($authenticated && $_SERVER['REQUEST_METHOD']==='GET' && $returnTo!=='/sistemas/') {header('Location: '.$returnTo,true,302);exit;}
 if ($authenticated) {
     $_SESSION['auth_at']=time();
     $portal=__DIR__.'/index.html';
@@ -85,6 +90,6 @@ if ($authenticated) {
 <style>:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#eef5ff;background:#0b1524;color-scheme:dark}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:radial-gradient(ellipse at 80% 0%,#1d3654,transparent 50%),#0b1524}.panel{width:min(440px,100%);padding:36px;border:1px solid #466583;border-radius:18px;background:#172b42}h1{font-size:clamp(28px,5vw,36px);margin:12px 0}p{color:#cbdbea;line-height:1.55}label{display:block;margin:25px 0 9px;font-weight:700}input{width:100%;padding:14px;border:1px solid #7895b1;border-radius:9px;background:#0b1524;color:#fff;font:inherit}button{margin-top:18px;width:100%;padding:14px;border:0;border-radius:9px;background:#e9f3ff;color:#10253c;font:inherit;font-weight:700;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #8fd8ff;outline-offset:3px}.error{color:#ffd1d1}small{color:#aac6de}</style></head>
 <body><main class="panel"><small>GEB TECNOLOGIA · ACESSO RESTRITO</small><h1>Portal de Aplicações</h1><p>Informe a senha de acesso para continuar.</p>
 <?php if ($error): ?><p class="error" role="alert"><?=htmlspecialchars($error,ENT_QUOTES,'UTF-8')?></p><?php endif ?>
-<form method="post" action="/sistemas/"><input type="hidden" name="csrf" value="<?=htmlspecialchars($_SESSION['csrf'],ENT_QUOTES,'UTF-8')?>">
+<form method="post" action="/sistemas/"><input type="hidden" name="next" value="<?=htmlspecialchars($returnTo,ENT_QUOTES,'UTF-8')?>"><input type="hidden" name="csrf" value="<?=htmlspecialchars($_SESSION['csrf'],ENT_QUOTES,'UTF-8')?>">
 <label for="senha">Senha</label><input id="senha" name="password" type="password" required autocomplete="current-password" autofocus>
 <button type="submit">Entrar</button></form></main></body></html>

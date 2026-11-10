@@ -1,0 +1,11 @@
+Options -Indexes
+DirectoryIndex index.php
+<FilesMatch "^(?:index\.html|.*\.(?:html|json|txt|md|bak|log|yml|yaml))$">
+Require all denied
+</FilesMatch>
+<FilesMatch "^_.*\.php$">
+Require all denied
+</FilesMatch>
+<IfModule mod_headers.c>
+Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>
