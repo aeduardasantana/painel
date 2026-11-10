@@ -44,11 +44,12 @@ footer{color:#c0d2e5;font-size:13px;border-top:1px solid #ffffff22}footer a{colo
 <h1>Portal de Aplicações</h1>
 <p class="intro">Acesso centralizado aos sistemas e ferramentas do ecossistema GEB Tecnologia, organizados por finalidade para facilitar a gestão e as operações. Cada aplicação mantém suas próprias permissões de acesso.</p>
 <div class="search-area"><label for="buscar">Buscar sistema ou atividade</label><input id="buscar" type="search" autocomplete="off" placeholder="Ex.: CNPJ, recrutamento, comercial"><span class="search-symbol" aria-hidden="true">⌕</span></div>
-<p class="results" id="contador" role="status" aria-live="polite">8 sistemas disponíveis</p>
+<p class="results" id="contador" role="status" aria-live="polite">9 ferramentas disponíveis</p>
 <section class="group" aria-labelledby="gestao-titulo"><div class="group-heading"><h2 id="gestao-titulo">Gestão e administração</h2><p>Operações internas, pessoas e certificação.</p></div><div class="grid">
 <article class="card" data-search="sgg gestão de processos, decisões, projetos, indicadores e riscos. gestão projetos indicadores"><div class="icon" aria-hidden="true">▦</div><div class="card-body"><h3>SGG</h3><p>Gestão de processos, decisões, projetos, indicadores e riscos.</p><a href="https://script.google.com/macros/s/AKfycbxKdhElT9y1WNV0m-FlYbucjssfcX6sG6csOa0jAOO9HZ5WHvrWH0cG-jua52Mz52yB/exec" target="_blank" rel="noopener noreferrer" aria-label="Acessar SGG em nova aba">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
 <article class="card" data-search="geb ats vagas, recrutamento, candidatos e seleção de talentos. recrutamento rh carreiras"><div class="icon" aria-hidden="true">♙</div><div class="card-body"><h3>GEB ATS</h3><p>Vagas, recrutamento, candidatos e seleção de talentos.</p><a href="https://script.google.com/macros/s/AKfycby6sdz91L3D6-vW-DIIJjHee9K4gVMflUZqS0l4Jy8IKG-kk28NZr62KmMywOeVkNvM1Q/exec" target="_blank" rel="noopener noreferrer" aria-label="Acessar GEB ATS em nova aba">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
 <article class="card" data-search="selo g - certificador análise de requerimentos, decisões e emissão de certificados. selo certificados"><div class="icon" aria-hidden="true">✦</div><div class="card-body"><h3>SELO G - Certificador</h3><p>Análise de requerimentos, decisões e emissão de certificados.</p><a href="https://script.google.com/macros/s/AKfycbxXGVjvWd8g2nPcyZVrMwFk_MFd3PNBHnyfgVW0eATDFaSf7oXUFS-dltq9AL2sG51JZw/exec" target="_blank" rel="noopener noreferrer" aria-label="Acessar SELO G - Certificador em nova aba">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
+<article class="card" data-search="pop procedimento operacional padrão jornada comercial lead prospect cadastro palestra atendimento checklists ações roteiro"><div class="icon" aria-hidden="true">≡</div><div class="card-body"><h3>POP · Jornada Comercial</h3><p>Etapas da operação, cadastro PF/PJ, mensagens copiáveis e ramificações por serviço.</p><a href="/sistemas/pop.php" aria-label="Abrir POP da jornada comercial">Abrir POP <span aria-hidden="true">↗</span></a></div></article>
 <article class="card" data-search="adminsite acesso à administração dos sites. sites edição administração"><div class="icon" aria-hidden="true">⚙</div><div class="card-body"><h3>AdminSite</h3><p>Acesso à administração dos sites.</p><a href="https://painel.compassrosesystems.com.br/admsite/"  aria-label="Acessar AdminSite">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
 </div></section>
 <section class="group" aria-labelledby="pesquisa-titulo"><div class="group-heading"><h2 id="pesquisa-titulo">Pesquisa e prospecção</h2><p>Ferramentas de consulta e busca de empresas.</p></div><div class="grid">
@@ -59,7 +60,7 @@ footer{color:#c0d2e5;font-size:13px;border-top:1px solid #ffffff22}footer a{colo
 <article class="card" data-search="bastidor gp acesso à plataforma bastidor gp. bastidor gp"><div class="icon" aria-hidden="true">◈</div><div class="card-body"><h3>Bastidor GP</h3><p>Acesso à plataforma Bastidor GP.</p><a href="https://bastidorgp.compassrosesystems.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Acessar Bastidor GP em nova aba">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
 <article class="card" data-search="agenzap acesso à plataforma agenzap. agenzap"><div class="icon" aria-hidden="true">▣</div><div class="card-body"><h3>AgenZap</h3><p>Acesso à plataforma AgenZap.</p><a href="https://agenzap.compassrosesystems.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Acessar AgenZap em nova aba">Acessar sistema <span aria-hidden="true">↗</span></a></div></article>
 </div></section>
-<p id="sem-resultados" class="no-results" hidden>Nenhum sistema encontrado. Tente outro nome ou atividade.</p>
+<p id="sem-resultados" class="no-results" hidden>Nenhum ferramenta encontrada. Tente outro nome ou atividade.</p>
 <p class="note">Esta central reúne atalhos e não armazena credenciais ou dados dos sistemas. O acesso às ferramentas depende das permissões de cada aplicação.</p>
 </main>
 <footer><span>GEB Tecnologia · Sistemas corporativos</span><a href="mailto:contato@grupoeduardabispo.com.br">Contato</a></footer>
@@ -71,7 +72,7 @@ field.addEventListener('input',()=>{
 const term=normalize(field.value);let visible=0;
 cards.forEach(card=>{const matches=normalize(card.dataset.search).includes(term);card.hidden=!matches;if(matches)visible++});
 groups.forEach(group=>{group.hidden=![...group.querySelectorAll('.card')].some(card=>!card.hidden)});
-count.textContent=visible+' '+(visible===1?'sistema encontrado':'sistemas encontrados');empty.hidden=visible!==0;
+count.textContent=visible+' '+(visible===1?'sistema encontrado':'ferramentas encontradas');empty.hidden=visible!==0;
 });
 })();
 </script>
