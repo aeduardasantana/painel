@@ -22,7 +22,7 @@ function port_auth(): void {
     if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS']==='off') {http_response_code(403);exit('HTTPS obrigatório.');}
     if (!in_array($_SERVER['REQUEST_METHOD']??'GET',['GET','HEAD'],true)) {http_response_code(405);exit('Método não permitido.');}
     $path=(string)(parse_url($_SERVER['REQUEST_URI']??'',PHP_URL_PATH)?:'/portfolios/');
-    $known=['/portfolios/','/portfolios/ecoar/','/portfolios/geb-empresarial/'];
+    $known=['/portfolios/','/portfolios/ecoar/','/portfolios/geb-empresarial/','/portfolios/geb-inclusao/','/portfolios/geb-educacao/'];
     $redirect=in_array($path,$known,true)?$path:'/portfolios/';
     if (($_SESSION['auth']??false)!==true || time()-(int)($_SESSION['auth_at']??0)>=28800) {
         header('Location: /sistemas/?next='.rawurlencode($redirect),true,302);
@@ -36,6 +36,8 @@ function port_begin(string $title,string $subtitle,string $current): void {
   $tabs=[
   ['/portfolios/','Visão geral'],
   ['/portfolios/ecoar/','ECOAR'],
+  ['/portfolios/geb-inclusao/','GEB Inclusão'],
+  ['/portfolios/geb-educacao/','GEB Educação'],
   ['/portfolios/geb-empresarial/','GEB Empresarial'],
   ['/sistemas/pop.php','Funil comercial · POP']
   ];
