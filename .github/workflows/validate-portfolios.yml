@@ -1,0 +1,45 @@
+name: Validar páginas protegidas de Portfólios
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'sistemas/portal.php'
+      - 'sistemas/pop.php'
+      - 'portfolios/**'
+      - '.github/workflows/deploy-solucoes.yml'
+      - '.github/workflows/validate-portfolios.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  auditar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar sintaxe de todos os arquivos PHP
+        run: |
+          set -euo pipefail
+          find portfolios -name '*.php' -print0 | xargs -0 -n 1 php -l
+          php -l sistemas/portal.php
+          php -l sistemas/pop.php
+      - name: Conferir proteção e segregação
+        run: |
+          set -euo pipefail
+          test ! -e portfolios/index.html
+          grep -q 'DirectoryIndex index.php' portfolios/.htaccess
+          grep -q 'Require all denied' portfolios/.htaccess
+          grep -q "session_name('GEB_PORTAL_SESSION_V2')" sistemas/portal.php
+          grep -q "session_name('GEB_PORTAL_SESSION_V2')" sistemas/pop.php
+          grep -q "session_name('GEB_PORTAL_SESSION_V2')" portfolios/_core.php
+          grep -q "'path'=>'/'" sistemas/portal.php
+          grep -q "'path'=>'/'" sistemas/pop.php
+          grep -q "'path'=>'/'" portfolios/_core.php
+          grep -q 'port_auth();' portfolios/index.php
+          grep -q 'port_auth();' portfolios/ecoar/index.php
+          grep -q 'port_auth();' portfolios/geb-empresarial/index.php
+          grep -q 'rm -f portfolios/index.html' .github/workflows/deploy-solucoes.yml
+          grep -q 'put portfolios/.htaccess' .github/workflows/deploy-solucoes.yml
+          grep -q 'needs: validar' .github/workflows/deploy-solucoes.yml
