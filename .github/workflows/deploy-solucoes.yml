@@ -23,7 +23,7 @@ jobs:
       - name: Validar gateways protegidos e páginas de cada braço
         run: |
           set -euo pipefail
-          for f in sistemas/portal.php sistemas/pop.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php; do
+          for f in sistemas/portal.php sistemas/pop.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
             php -l "$f"
           done
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
@@ -99,6 +99,8 @@ jobs:
           expect_redirect "/portfolios/"
           expect_redirect "/portfolios/ecoar/"
           expect_redirect "/portfolios/geb-empresarial/"
+          expect_redirect "/portfolios/geb-inclusao/"
+          expect_redirect "/portfolios/geb-educacao/"
           expect_redirect "/sistemas/pop.php"
           expect_forbidden "/portfolios/index.html"
           expect_forbidden "/portfolios/_core.php"

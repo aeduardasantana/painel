@@ -18,7 +18,7 @@ if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') {
 }
 // Only allow post-login redirects to protected internal portfolio paths.
 $returnCandidate=(string)($_POST['next']??$_GET['next']??'');
-$allowedReturn=['/portfolios/','/portfolios/ecoar/','/portfolios/geb-empresarial/'];
+$allowedReturn=['/portfolios/','/portfolios/ecoar/','/portfolios/geb-empresarial/','/portfolios/geb-inclusao/','/portfolios/geb-educacao/'];
 $returnTo=in_array($returnCandidate,$allowedReturn,true)?$returnCandidate:'/sistemas/';
 if (isset($_POST['logout'])) {
     if (hash_equals((string)($_SESSION['csrf'] ?? ''),(string)($_POST['csrf'] ?? ''))) {
