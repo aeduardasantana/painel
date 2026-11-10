@@ -36,13 +36,14 @@ Identificar o que fazer, em qual sistema, em qual etapa e qual é a próxima dec
 
 ## Ramificação prioritária — palestra corporativa
 
-1. **Briefing:** tema, objetivos, público, quantidade, formato, acessibilidade, local, data e duração; identificar PF/PJ e decisor.
-2. **Proposta:** escopo, valores, validade, despesas e condições de pagamento (fluxo a homologar).
-3. **Aceite:** confirmação escrita e contrato quando aplicável; somente aqui registrar conversão a cliente.
-4. **Preparação:** cronograma, materiais, logística, alinhamento com contratante.
-5. **Entrega:** execução e registro mínimo de evidência.
-6. **NPS:** aplicar fluxo existente, após corrigir vinculação de IDs e a finalidade das comunicações.
-7. **Pós-evento:** encaminhar resultados, continuidade, novos serviços e relacionamento autorizado.
+1. **Briefing (modelo já criado):** tema, objetivos, público, quantidade, formato, acessibilidade, local, data e duração; identificar PF/PJ e decisor. Modelo: https://docs.google.com/document/d/1VV0AlhtdJ097Sbo_iwrkroXetG44ib1k9RnYsktyEh8/edit
+2. **Proposta (modelo já criado):** derivar somente do briefing aprovado, com escopo, valores, validade, despesas e condições de pagamento; versionar e registrar envio. Modelo: https://docs.google.com/document/d/1Ug6wzrV24IqRATlvhRhUyAZdwuDnVjRQ9KE4YCV_n9s/edit. Emissão automática ainda pendente.
+3. **Negociação e aceite da proposta:** registrar versão aprovada e confirmação escrita; ainda não é contrato assinado.
+4. **Contrato:** gerar a partir dos termos aceitos e encaminhar para conferência/assinatura; minuta criada em https://docs.google.com/document/d/1vY4z2aGU1iTWmwaPNHu6t1QVlFGglfpKDFAWoashruA/edit, com revisão jurídica pendente.
+5. **Preparação:** cronograma, materiais, logística, alinhamento com contratante.
+6. **Entrega:** execução e registro mínimo de evidência.
+7. **NPS:** aplicar fluxo existente, após corrigir vinculação de IDs e a finalidade das comunicações.
+8. **Pós-evento:** encaminhar resultados, continuidade, novos serviços e relacionamento autorizado.
 
 ## Outras ramificações
 
