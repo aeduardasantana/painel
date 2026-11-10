@@ -2,7 +2,7 @@ Options -Indexes
 DirectoryIndex portal.php
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteRule ^index\.html$ - [F,L,NC]
+RewriteRule ^(?:index|pop)\.html$ - [F,L,NC]
 </IfModule>
 <FilesMatch "^\.(?:ht|env)|^(?:\.geb-systems-auth\.php|\.systems-pass\.php)$">
 Require all denied
