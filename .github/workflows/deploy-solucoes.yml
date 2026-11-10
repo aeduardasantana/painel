@@ -72,3 +72,34 @@ jobs:
           rm -f l/index.html
           bye
           EOF
+
+      - name: Fiscalizar acesso externo sem senha
+        shell: bash
+        run: |
+          set -euo pipefail
+          origin="https://painel.compassrosesystems.com.br"
+          expect_redirect() {
+            local path="$1" code
+            code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin$path")
+            echo "$path -> HTTP $code"
+            if [ "$code" != "302" ]; then
+              echo "::error::Rota protegida retornou $code, deveria exigir login (302): $path"
+              exit 1
+            fi
+          }
+          expect_forbidden() {
+            local path="$1" code
+            code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin$path")
+            echo "$path -> HTTP $code"
+            if [ "$code" != "403" ] && [ "$code" != "404" ]; then
+              echo "::error::Arquivo protegido retornou $code, deveria ser bloqueado: $path"
+              exit 1
+            fi
+          }
+          expect_redirect "/portfolios/"
+          expect_redirect "/portfolios/ecoar/"
+          expect_redirect "/portfolios/geb-empresarial/"
+          expect_redirect "/sistemas/pop.php"
+          expect_forbidden "/portfolios/index.html"
+          expect_forbidden "/portfolios/_core.php"
+
