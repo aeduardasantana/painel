@@ -6,6 +6,7 @@ on:
       - 'admsite/**'
       - 'sistemas/**'
       - 'busca-comercial/**'
+      - 'portfolios/**'
       - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
 permissions:
@@ -46,6 +47,7 @@ jobs:
           mirror -R --only-newer admsite admsite
           mirror -R --only-newer sistemas sistemas
           mirror -R --only-newer busca-comercial busca-comercial
+          mirror -R --only-newer portfolios portfolios
           rm -f l/index.html
           bye
           EOF
