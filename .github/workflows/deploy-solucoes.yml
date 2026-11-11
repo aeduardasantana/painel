@@ -28,7 +28,7 @@ jobs:
       - name: Validar gateways protegidos e páginas de cada braço
         run: |
           set -euo pipefail
-          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php sistemas/rotinas-catalogo.php sistemas/rotinas-push-common.php sistemas/rotinas-push.php sistemas/rotinas-status.php sistemas/rotinas-disparar.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
+          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php sistemas/rotinas-catalogo.php sistemas/rotinas-recorrencias.php sistemas/rotinas-desempenho.php sistemas/rotinas-push-common.php sistemas/rotinas-push.php sistemas/rotinas-status.php sistemas/rotinas-disparar.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
             php -l "$f"
           done
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
@@ -45,8 +45,12 @@ jobs:
           python3 -m json.tool sistemas/composer.json >/dev/null
           test -f sistemas/vendor/.htaccess
           grep -q "geb-blog-conferir-publicacao" sistemas/rotinas-catalogo.php
+          grep -q "saude-qua-1430-quinzenal" sistemas/rotinas-catalogo.php
+          grep -q "pinterest-planejar-agendar-mes" sistemas/rotinas-catalogo.php
+          grep -q "studio.youtube.com/channel/UCanvdpcTbEXJa4xXeeHjbig/content" sistemas/rotinas-catalogo.php
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $c=require "sistemas/rotinas-catalogo.php"; $tz=new DateTimeZone("America/Sao_Paulo"); $f=fn($s)=>new DateTimeImmutable($s,$tz); if (!pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-11")) || pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-18")) || !pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-25")) || !pm_scheduled($c["pinterest-planejar-agendar-mes"],$f("2026-11-20")) || pm_scheduled($c["pinterest-planejar-agendar-mes"],$f("2026-11-21")))exit(1);'
           test -f .github/workflows/alertas-rotinas.yml
-          php -r '$r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15"); $a=array_filter($r,fn($t)=>in_array((int)$d->format("N"),$t["dias"],true)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15",new DateTimeZone("America/Sao_Paulo")); $a=array_filter($r,fn($t)=>pm_scheduled($t,$d)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
       - name: Validar dependências PHP de notificações
         uses: shivammathur/setup-php@v2
         with:
@@ -147,6 +151,7 @@ jobs:
           expect_redirect "/portfolios/geb-educacao/"
           expect_redirect "/sistemas/pop.php"
           expect_redirect "/sistemas/rotinas.php"
+          expect_redirect "/sistemas/rotinas-desempenho.php"
           expect_forbidden "/sistemas/.rotinas-gestao.json"
           expect_forbidden "/sistemas/.rotinas-subs.json"
           expect_forbidden "/sistemas/.rotinas-vapid.json"
