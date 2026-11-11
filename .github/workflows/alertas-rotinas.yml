@@ -5,6 +5,9 @@ on:
     # Pontos de disparo: 08h15, 09h30, 11h e repetições horárias.
     - cron: '0,15,30 11-23 * * *'
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Publicar módulos Meu Site na Locaweb']
+    types: [completed]
 permissions:
   contents: read
 concurrency:
@@ -12,6 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   enviar:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
