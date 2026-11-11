@@ -1,0 +1,37 @@
+name: Painel Mestre — alertas de rotinas
+on:
+  schedule:
+    # GitHub Actions usa UTC. 11–23 UTC = 08–20h no Brasil.
+    # Pontos de disparo: 08h15, 09h30, 11h e repetições horárias.
+    - cron: '0,15,30 11-23 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: painel-mestre-alertas
+  cancel-in-progress: false
+jobs:
+  enviar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Verificar configuração do agendador
+        env:
+          ROTINAS_JOB_KEY: ${{ secrets.SYSTEMS_PASS }}
+        shell: bash
+        run: |
+          if [ -z "$ROTINAS_JOB_KEY" ]; then
+            echo "::error::O segredo SYSTEMS_PASS, utilizado pelo Portal de Aplicações, não está configurado."
+            exit 1
+          fi
+      - name: Disparar alertas privados
+        shell: bash
+        env:
+          ROTINAS_JOB_KEY: ${{ secrets.SYSTEMS_PASS }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 90 \
+            --retry 2 --retry-delay 5 \
+            --request POST \
+            --header "X-Rotinas-Job-Key: $ROTINAS_JOB_KEY" \
+            --header "Accept: application/json" \
+            "https://painel.compassrosesystems.com.br/sistemas/rotinas-disparar.php"
