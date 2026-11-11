@@ -1,0 +1,24 @@
+{
+  "id": "/sistemas/rotinas.php",
+  "name": "Painel Mestre GEB — Rotinas",
+  "short_name": "Painel Mestre",
+  "description": "Compromissos do GEB com registro diário e alertas.",
+  "start_url": "/sistemas/rotinas.php",
+  "scope": "/sistemas/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#f4f5f2",
+  "theme_color": "#151c17",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/sistemas/rotinas-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
