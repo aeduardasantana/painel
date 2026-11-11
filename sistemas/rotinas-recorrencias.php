@@ -23,6 +23,14 @@ function pm_scheduled(array $task, DateTimeImmutable $date): bool {
             return $days>=0 && $days%14===0;
         case 'mensal':
             return (int)$date->format('j') === (int)($task['dia_mes']??0);
+        case 'intervalo_dias':
+            // Períodos fixos (ex.: 30 dias), sem deslizar por meses de tamanhos diferentes.
+            $anchor=(string)($task['data_ancora']??'');
+            $interval=(int)($task['intervalo_dias']??0);
+            $anchorDay=DateTimeImmutable::createFromFormat('!Y-m-d',$anchor,new DateTimeZone('America/Sao_Paulo'));
+            if (!$anchorDay || $anchorDay->format('Y-m-d')!==$anchor || $interval<1 || $interval>366) return false;
+            $days=(int)$anchorDay->diff($date)->format('%r%a');
+            return $days>=0 && $days%$interval===0;
         default:
             return false;
     }
