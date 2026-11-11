@@ -50,7 +50,7 @@ function rp_mutate(string $filename, callable $change): void {
     try {
         rewind($handle); $raw=stream_get_contents($handle);
         $stored=trim((string)$raw)===''?[]:json_decode((string)$raw,true);
-        if (!is_array($stored) || json_last_error()!==JSON_ERROR_NONE) throw new RuntimeException('Arquivo existente inválido; gravação cancelada.');
+        if (!is_array($stored) || (trim((string)$raw)!=='' && json_last_error()!==JSON_ERROR_NONE)) throw new RuntimeException('Arquivo existente inválido; gravação cancelada.');
         $updated=$change($stored);
         if (!is_array($updated)) throw new RuntimeException('Retorno inválido.');
         $serialized=json_encode($updated,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES);
