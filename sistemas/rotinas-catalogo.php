@@ -117,4 +117,19 @@ return [
         ],
         'frequencia'=>'mensal', 'dia_mes'=>20, 'ativo_desde'=>'2026-11-11'
     ],
+    'educacao-bolsa-mais-brasil-agendar' => [
+        'hora'=>'13:00',
+        'titulo'=>'Agendar publicações do Bolsa Mais Brasil para os próximos 30 dias',
+        'area'=>'GEB Educação · Marketing / Parcerias',
+        'descricao'=>'Selecionar os posts fornecidos pela matriz e agendar as publicações no Facebook e Instagram do Bolsa Mais Brasil.',
+        'observacoes'=>'Primeira execução: 11/11/2026. Repetir a cada 30 dias a partir desta data para manter a cobertura programada. Horário de 13h é provisório, sujeito à organização de agenda. Conferir materiais originais disponibilizados pela matriz na pasta do Drive (ou no grupo de WhatsApp quando necessário), adequar textos e formatos conforme orientações recebidas, validar direitos e links, agendar no Meta Business Suite e confirmar os agendamentos em ambas as redes antes de marcar como Feito. Não considerar postagem efetiva apenas pelo agendamento; esta rotina mede a preparação e a programação dos próximos 30 dias.',
+        'links'=>[
+            ['titulo'=>'Agendar no Meta Business Suite','url'=>'https://business.facebook.com/latest/home?asset_id=219644841229036'],
+            ['titulo'=>'Posts da matriz no Drive','url'=>'https://drive.google.com/drive/folders/1JDixQu_uyL_B7PunAatjg5c7CLb7HLnK?usp=drive_link'],
+        ],
+        'frequencia'=>'intervalo_dias',
+        'intervalo_dias'=>30,
+        'data_ancora'=>'2026-11-11',
+        'ativo_desde'=>'2026-11-11',
+    ],
 ];
