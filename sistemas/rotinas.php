@@ -183,15 +183,52 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 .stat{padding:15px;background:#fff;border:1px solid var(--line);border-radius:5px}
 .stat strong{font-size:30px;line-height:1;display:block}.stat span{font-size:12px;color:var(--muted)}
 .tasks{display:grid;gap:12px}
-.task{background:#fff;border:1px solid var(--line);border-left:5px solid #9daaa0;border-radius:5px;padding:19px}
-.task[data-state="feito"]{border-left-color:#47834a}
-.task[data-state="pendente"]{border-left-color:#b15a35}
+.task{
+  background:#fff;border:1px solid var(--line);
+  border-left:7px solid #929e98;border-radius:5px;padding:19px;
+}
+.task[data-state="feito"]{
+  background:#eff8ef;border-color:#aacdb0;border-left-color:#2b7543;
+}
+.task[data-state="pendente"]{
+  background:#fff3e9;border-color:#e4b695;border-left-color:#ab4d17;
+}
 .task-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
 .time{font-size:21px;font-weight:800;font-variant-numeric:tabular-nums}
 .task h2{font-size:19px;margin:5px 0}.task p{margin:0 0 12px;color:var(--muted)}
-.status{font-size:12px;border:1px solid var(--line);border-radius:4px;padding:4px 9px;white-space:nowrap}
+.status{
+  display:inline-flex;align-items:center;gap:9px;flex-shrink:0;
+  font-size:12px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;
+  border:1px solid #ccd4cf;border-radius:4px;padding:8px 12px;
+  background:#eef1ef;color:#44534a;white-space:nowrap;
+}
+.status::before{content:"○";font-size:17px;line-height:1}
+.task[data-state="feito"] .status{
+  color:#fff;background:#21633c;border-color:#21633c;
+}
+.task[data-state="feito"] .status::before{content:"✓"}
+.task[data-state="pendente"] .status{
+  color:#fff;background:#99400e;border-color:#99400e;
+}
+.task[data-state="pendente"] .status::before{content:"!";font-size:16px}
 .task form{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
-.task form button{min-width:100px}
+.task form button{min-width:108px;background:#fff;color:var(--ink);border:1px solid #89978d}
+.task form button:hover{background:#f0f2ed}
+.task form button.primary{background:#fff;border-color:#89978d}
+.task form button.primary:hover{background:#e7f1d5}
+.task[data-state="feito"] button[value="feito"]{
+  background:#21633c;border-color:#21633c;color:#fff;
+  box-shadow:inset 0 0 0 1px #21633c;
+}
+.task[data-state="pendente"] button[value="pendente"]{
+  background:#99400e;border-color:#99400e;color:#fff;
+  box-shadow:inset 0 0 0 1px #99400e;
+}
+.task button[value="limpar"]{font-weight:600}
+@media(forced-colors:active){
+  .task[data-state="feito"],.task[data-state="pendente"]{border-left-width:9px}
+  .task button[aria-pressed="true"]{outline:2px solid Highlight}
+}
 .meta{font-size:12px;color:var(--muted)}
 .notice{padding:13px 15px;background:#fff;border:1px solid var(--line);border-radius:4px;margin-bottom:16px}
 .section{margin-top:36px}
@@ -232,7 +269,7 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
 <?php foreach ($tasks as $id => $task):
 $record=$dayRecords[$id] ?? [];
 $state=(string)($record['status'] ?? '');
-$label=$state==='feito'?'Feito':($state==='pendente'?'Pendente':'Sem marcação');
+$label=$state==='feito'?'Concluído':($state==='pendente'?'Pendente':'Sem marcação');
 ?>
 <article class="task" data-state="<?=esc($state)?>">
 <div class="task-header"><div>
@@ -246,8 +283,8 @@ $label=$state==='feito'?'Feito':($state==='pendente'?'Pendente':'Sem marcação'
 <input type="hidden" name="csrf" value="<?=esc($_SESSION['rotinas_csrf'])?>">
 <input type="hidden" name="data" value="<?=esc($key)?>">
 <input type="hidden" name="tarefa" value="<?=esc($id)?>">
-<button class="primary" name="status" value="feito" type="submit" aria-label="Marcar como feito: <?=esc($task['titulo'])?>">Feito</button>
-<button name="status" value="pendente" type="submit" aria-label="Marcar como pendente: <?=esc($task['titulo'])?>">Pendente</button>
+<button class="primary" name="status" value="feito" type="submit" aria-pressed="<?=$state==='feito'?'true':'false'?>" aria-label="Marcar como feito: <?=esc($task['titulo'])?>">Feito</button>
+<button name="status" value="pendente" type="submit" aria-pressed="<?=$state==='pendente'?'true':'false'?>" aria-label="Marcar como pendente: <?=esc($task['titulo'])?>">Pendente</button>
 <?php if ($state !== ''): ?><button name="status" value="limpar" type="submit" aria-label="Remover marcação: <?=esc($task['titulo'])?>">Desmarcar</button><?php endif; ?>
 </form>
 </article>
