@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD']==='GET') {
 }
 if ($_SERVER['REQUEST_METHOD']!=='POST') rp_fail(405,'Método não permitido.');
 if (!hash_equals((string)($_SESSION['rotinas_csrf']??''),(string)($_SERVER['HTTP_X_CSRF_TOKEN']??''))) rp_fail(403,'Validação de segurança expirada.');
-if (strlen((string)($_SERVER['CONTENT_LENGTH']??'0'))>5000) rp_fail(413,'Dados grandes demais.');
+if ((int)($_SERVER['CONTENT_LENGTH']??0)>5000) rp_fail(413,'Dados grandes demais.');
 $body=json_decode((string)file_get_contents('php://input'),true);
 if (!is_array($body)) rp_fail(400,'JSON inválido.');
 $action=(string)($body['action']??'');
