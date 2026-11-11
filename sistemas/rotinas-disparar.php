@@ -54,7 +54,7 @@ try {
     rp_mutate('.rotinas-sent.json',function(array $logged) use ($subscriptions,$webPush,$records,$tasks,$day,$now,$today,&$sentCount,&$failedCount,&$dueCount): array {
         foreach ($tasks as $id=>$task) {
             if (!pm_scheduled($task,$today)) continue;
-            if (($records[$day][$id]['status']??'')==='feito') continue;
+            if (in_array(($records[$day][$id]['status']??''),['feito','cancelado'],true)) continue;
             [$h,$m]=array_map('intval',explode(':',$task['hora']));
             $due=$today->setTime($h,$m);
             if ($now<$due) continue;
