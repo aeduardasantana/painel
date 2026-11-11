@@ -28,7 +28,7 @@ jobs:
       - name: Validar gateways protegidos e páginas de cada braço
         run: |
           set -euo pipefail
-          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php sistemas/rotinas-catalogo.php sistemas/rotinas-recorrencias.php sistemas/rotinas-desempenho.php sistemas/rotinas-push-common.php sistemas/rotinas-push.php sistemas/rotinas-status.php sistemas/rotinas-disparar.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
+          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php sistemas/rotinas-versao.php sistemas/rotinas-catalogo.php sistemas/rotinas-recorrencias.php sistemas/rotinas-desempenho.php sistemas/rotinas-push-common.php sistemas/rotinas-push.php sistemas/rotinas-status.php sistemas/rotinas-disparar.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
             php -l "$f"
           done
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
@@ -40,6 +40,10 @@ jobs:
           grep -q 'Require all denied' portfolios/.htaccess
           test ! -f portfolios/index.html
           test -f sistemas/rotinas-app.js && node --check sistemas/rotinas-app.js
+          test -f sistemas/rotinas-update.js && node --check sistemas/rotinas-update.js
+          grep -q 'app-update-check' sistemas/rotinas.php
+          grep -q 'app-update-banner' sistemas/rotinas-desempenho.php
+          php -r 'require "sistemas/rotinas-versao.php"; if(pm_build_version()!=="") exit(1);'
           test -f sistemas/rotinas-sw.js && node --check sistemas/rotinas-sw.js
           python3 -m json.tool sistemas/rotinas.webmanifest >/dev/null
           python3 -m json.tool sistemas/composer.json >/dev/null
@@ -121,6 +125,24 @@ jobs:
           bye
           EOF
 
+      - name: Registrar a versão somente após transferência completa
+        env:
+          FTP_HOST: ${{ secrets.HOST || secrets.LOCAWEB_FTP_HOST }}
+          FTP_USER: ${{ secrets.USER || secrets.LOCAWEB_FTP_USER }}
+          FTP_PASS: ${{ secrets.PASS || secrets.LOCAWEB_FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          printf '{"version":"%s"}\n' "$GITHUB_SHA" > /tmp/rotinas-version.json
+          python3 -m json.tool /tmp/rotinas-version.json > /dev/null
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
+          set net:max-retries 3
+          set net:timeout 20
+          set ftp:ssl-allow false
+          cd public_html/painel/sistemas
+          put /tmp/rotinas-version.json -o rotinas-version.json
+          bye
+          EOF
+
       - name: Fiscalizar acesso externo sem senha
         shell: bash
         run: |
@@ -157,11 +179,16 @@ jobs:
           expect_forbidden "/sistemas/.rotinas-vapid.json"
           expect_forbidden "/sistemas/.rotinas-sent.json"
           expect_forbidden "/sistemas/vendor/autoload.php"
-          for path in rotinas-app.js rotinas-sw.js rotinas.webmanifest rotinas-icon.svg rotinas-icon-192.png rotinas-icon-512.png; do
+          for path in rotinas-app.js rotinas-update.js rotinas-version.json rotinas-sw.js rotinas.webmanifest rotinas-icon.svg rotinas-icon-192.png rotinas-icon-512.png; do
             code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/$path")
             echo "/sistemas/$path -> HTTP $code"
             test "$code" = "200"
           done
+          published="$(curl --fail --silent --show-error --max-time 25 "$origin/sistemas/rotinas-version.json" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("version",""))')"
+          test "$published" = "$GITHUB_SHA" || {
+            echo "::error::Versão publicada não corresponde ao commit implantado."
+            exit 1
+          }
           for path in rotinas-push.php rotinas-status.php; do
             code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/$path")
             echo "/sistemas/$path sem login -> HTTP $code"
