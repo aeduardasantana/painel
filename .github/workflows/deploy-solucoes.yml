@@ -8,6 +8,11 @@ on:
       - 'busca-comercial/**'
       - 'portfolios/**'
       - '.github/workflows/deploy-solucoes.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'sistemas/**'
+      - '.github/workflows/deploy-solucoes.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -29,12 +34,13 @@ jobs:
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/pop.php
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/rotinas.php
-          grep -q '\.rotinas-gestao\\.json' sistemas/.htaccess
+          grep -Fq '<FilesMatch "^\.rotinas-gestao\.json$">' sistemas/.htaccess
           grep -q 'GEB_PORTAL_SESSION_V2' portfolios/_core.php
           grep -q 'DirectoryIndex index.php' portfolios/.htaccess
           grep -q 'Require all denied' portfolios/.htaccess
           test ! -f portfolios/index.html
   deploy:
+    if: github.event_name != 'pull_request'
     needs: validar
     runs-on: ubuntu-latest
     steps:
