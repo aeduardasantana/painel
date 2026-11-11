@@ -51,6 +51,9 @@ jobs:
           grep -q "geb-blog-conferir-publicacao" sistemas/rotinas-catalogo.php
           grep -q "saude-qua-1430-quinzenal" sistemas/rotinas-catalogo.php
           grep -q "pinterest-planejar-agendar-mes" sistemas/rotinas-catalogo.php
+          grep -q "eduarda-bispo-gravar-conteudo-mensal" sistemas/rotinas-catalogo.php
+          grep -q "eduarda-bispo-agendar-conteudo-mensal" sistemas/rotinas-catalogo.php
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $tasks=require "sistemas/rotinas-catalogo.php"; $tz=new DateTimeZone("America/Sao_Paulo"); $d=fn($x)=>new DateTimeImmutable($x,$tz); foreach(["eduarda-bispo-gravar-conteudo-mensal","eduarda-bispo-agendar-conteudo-mensal"] as $id){$t=$tasks[$id];if(!pm_scheduled($t,$d("2026-11-12")) || pm_scheduled($t,$d("2026-11-13")) || !pm_scheduled($t,$d("2026-12-12")) || pm_scheduled($t,$d("2026-12-13"))) exit(1);}'
           grep -Fq "['feito','pendente','cancelado','limpar']" sistemas/rotinas.php
           grep -q 'value="cancelado"' sistemas/rotinas.php
           grep -q "task.status==='cancelado'" sistemas/rotinas-app.js
