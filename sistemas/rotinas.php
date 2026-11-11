@@ -159,7 +159,7 @@ while (count($history) < 10) {
 <meta name="csrf-token" content="<?=esc($_SESSION['rotinas_csrf'])?>">
 <link rel="manifest" href="/sistemas/rotinas.webmanifest">
 <link rel="icon" href="/sistemas/rotinas-icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/sistemas/rotinas-icon.svg">
+<link rel="apple-touch-icon" href="/sistemas/rotinas-icon-192.png">
 <script src="/sistemas/rotinas-app.js" defer></script>
 <title>Rotinas de execução | Painel Mestre GEB</title>
 <style>
