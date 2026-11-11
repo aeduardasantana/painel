@@ -37,9 +37,84 @@ return [
         'descricao' => 'Publicar a edição e verificar seu acesso público.',
         'observacoes' => 'Conferir título, descrição, publicação efetiva e link da edição. Manter os documentos e registros da edição na pasta do Drive. A marcação é manual e independente da rotina de gravação.',
         'links' => [
-            ['titulo' => 'Pasta de edições no Drive', 'url' => 'https://drive.google.com/drive/folders/1YHBXSAahlwfHWeKJ1dg8SfzC5g5Gu-pN?usp=drive_link'],
-            ['titulo' => 'Abrir Bastidor GP', 'url' => 'https://bastidorgp.compassrosesystems.com.br/'],
+            ['titulo' => 'Publicar no YouTube Studio', 'url' => 'https://studio.youtube.com/channel/UCanvdpcTbEXJa4xXeeHjbig/content'],
         ],
         'dias' => [1, 2, 3, 4, 5],
+    ],
+    // Identificação apenas por horário: nomes e telefones ficam exclusivamente na Amplimed.
+    'saude-seg-2030' => [
+        'hora'=>'20:30', 'titulo'=>'Atendimento assistencial · segunda, 20h30–21h10',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir a sessão na agenda oficial e registrar execução após o horário.',
+        'observacoes'=>'Recorrência semanal documentada no SGG. O Painel Mestre não mantém dados identificáveis de pacientes nem substitui a agenda clínica. O alerta das 20h30 não terá repetição após 21h.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[1], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1225' => [
+        'hora'=>'12:25', 'titulo'=>'Atendimento assistencial · quarta, 12h25–12h55',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'Recorrência semanal documentada no SGG. Sem dados de pacientes no repositório.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1430-quinzenal' => [
+        'hora'=>'14:30', 'titulo'=>'Atendimento assistencial quinzenal · quarta, 14h30–15h10',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir ocorrência quinzenal na Amplimed e registrar execução.',
+        'observacoes'=>'Quinzenal conforme SGG. Âncora de cálculo: 16/09/2026, data observada no calendário de referência. Confirmar na Amplimed eventuais alterações, cancelamentos ou reposições.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'quinzenal', 'data_ancora'=>'2026-09-16', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1520' => [
+        'hora'=>'15:20', 'titulo'=>'Atendimento assistencial · quarta, 15h20–16h',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'Recorrência semanal documentada no SGG.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1650' => [
+        'hora'=>'16:50', 'titulo'=>'Atendimento assistencial · quarta, 16h50–17h10',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'Recorrência semanal documentada no SGG.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1720' => [
+        'hora'=>'17:20', 'titulo'=>'Atendimento assistencial · quarta, 17h20–17h40',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'Recorrência semanal documentada no SGG.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qua-1800' => [
+        'hora'=>'18:00', 'titulo'=>'Atendimento assistencial · quarta, 18h–18h40',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'Recorrência semanal documentada no SGG.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[3], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    'saude-qui-1920' => [
+        'hora'=>'19:20', 'titulo'=>'Atendimento assistencial · quinta, 19h20–20h',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Conferir na Amplimed e registrar execução.',
+        'observacoes'=>'A base SGG sinaliza conflito com compromisso acadêmico na quinta-feira, 18h55–22h25. Validar a prioridade e a agenda vigente antes de confirmar presença ou programar alterações.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'dias'=>[4], 'frequencia'=>'semanal', 'ativo_desde'=>'2026-11-11'
+    ],
+    // Mensais de pacientes não têm dia fixo suficientemente confirmado: apenas verificação de agenda.
+    'saude-conferir-mensais' => [
+        'hora'=>'08:30', 'titulo'=>'Confirmar atendimentos mensais na Amplimed',
+        'area'=>'GEB Saúde · Atendimento', 'descricao'=>'Verificar as duas rotinas mensais registradas no SGG e atualizar a agenda efetiva.',
+        'observacoes'=>'O SGG documenta uma sessão mensal de quarta-feira às 16h05–16h45 e outra sessão mensal sem horário confirmado. Não gerar notificações de sessões em datas presumidas; confirmar as datas diretamente na Amplimed.',
+        'links'=>[['titulo'=>'Abrir agenda Amplimed','url'=>'https://app.amplimed.com.br/consultas']],
+        'frequencia'=>'mensal', 'dia_mes'=>1, 'ativo_desde'=>'2026-12-01'
+    ],
+    'pinterest-planejar-agendar-mes' => [
+        'hora'=>'14:00', 'titulo'=>'Programar pins do próximo mês no Pinterest',
+        'area'=>'Eduarda Bispo · Marketing', 'descricao'=>'Fazer curadoria, revisar direitos e completar o agendamento mensal dos pins.',
+        'observacoes'=>'Dia 20 às 14h é uma referência operacional inicial, ajustável. A conta estava agendada até 25/11/2026, conforme a usuária. Na planilha, 10 pins constam como Agendado até 25/11; os posteriores aparecem Em curadoria e NÃO devem ser considerados agendados. Verificar fotos, direitos, textos alternativos, links e calendário antes de concluir.',
+        'links'=>[
+            ['titulo'=>'Perfil Pinterest','url'=>'https://br.pinterest.com/aeduardabispo/'],
+            ['titulo'=>'Pins agendados','url'=>'https://br.pinterest.com/aeduardabispo/scheduled-pins/'],
+            ['titulo'=>'Inventário editorial (Drive)','url'=>'https://docs.google.com/spreadsheets/d/198SfxlHLpOUILmzuuFBBbmDgSI2qta8B9YwEBt6YAYA/edit?usp=sharing']
+        ],
+        'frequencia'=>'mensal', 'dia_mes'=>20, 'ativo_desde'=>'2026-11-11'
     ],
 ];
