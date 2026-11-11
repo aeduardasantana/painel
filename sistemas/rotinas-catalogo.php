@@ -132,4 +132,34 @@ return [
         'data_ancora'=>'2026-11-11',
         'ativo_desde'=>'2026-11-11',
     ],
+    'eduarda-bispo-gravar-conteudo-mensal' => [
+        'hora'=>'14:00',
+        'titulo'=>'Gravar os conteúdos mensais de Eduarda Bispo',
+        'area'=>'Eduarda Bispo · Comunicação / Produção',
+        'descricao'=>'Gravar em lote o conteúdo destinado aos perfis pessoais profissionais do Instagram e Facebook.',
+        'observacoes'=>'Primeira execução: quinta-feira, 12/11/2026. Recorrência mensal proposta para o dia 12 de cada mês, às 14h (horário provisório). Conferir o planejamento editorial, preparar roteiros e materiais, gravar os conteúdos e guardar os arquivos organizados no Drive. Esta tarefa mede a gravação, não o agendamento. Marcar Feito somente após concluir a gravação.',
+        'links'=>[
+            ['titulo'=>'Pasta de conteúdos no Drive','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Perfil Instagram Eduarda Bispo','url'=>'https://www.instagram.com/aeduardabispo'],
+            ['titulo'=>'Página Facebook Eduarda Bispo','url'=>'https://www.facebook.com/aeduardabispo/']
+        ],
+        'frequencia'=>'mensal',
+        'dia_mes'=>12,
+        'ativo_desde'=>'2026-11-12'
+    ],
+    'eduarda-bispo-agendar-conteudo-mensal' => [
+        'hora'=>'16:00',
+        'titulo'=>'Agendar as publicações mensais de Eduarda Bispo',
+        'area'=>'Eduarda Bispo · Comunicação / Marketing',
+        'descricao'=>'Agendar no Facebook e Instagram os conteúdos preparados para o próximo ciclo mensal.',
+        'observacoes'=>'Primeira execução: quinta-feira, 12/11/2026. Recorrência mensal proposta para o dia 12 de cada mês, às 16h (horário provisório). Usar os arquivos organizados na pasta do Drive, revisar legendas, links, formato e adequação a cada rede, programar as publicações e conferir o calendário de ambas as contas. Marcar Feito apenas após confirmar os agendamentos; marcar a gravação como Feito não conclui automaticamente esta atividade.',
+        'links'=>[
+            ['titulo'=>'Pasta de conteúdos no Drive','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Perfil Instagram Eduarda Bispo','url'=>'https://www.instagram.com/aeduardabispo'],
+            ['titulo'=>'Página Facebook Eduarda Bispo','url'=>'https://www.facebook.com/aeduardabispo/']
+        ],
+        'frequencia'=>'mensal',
+        'dia_mes'=>12,
+        'ativo_desde'=>'2026-11-12'
+    ],
 ];
