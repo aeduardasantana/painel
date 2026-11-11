@@ -28,17 +28,36 @@ jobs:
       - name: Validar gateways protegidos e páginas de cada braço
         run: |
           set -euo pipefail
-          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
+          for f in sistemas/portal.php sistemas/pop.php sistemas/rotinas.php sistemas/rotinas-catalogo.php sistemas/rotinas-push-common.php sistemas/rotinas-push.php sistemas/rotinas-status.php sistemas/rotinas-disparar.php portfolios/_core.php portfolios/index.php portfolios/ecoar/index.php portfolios/geb-empresarial/index.php portfolios/geb-inclusao/index.php portfolios/geb-educacao/index.php; do
             php -l "$f"
           done
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/portal.php
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/pop.php
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/rotinas.php
-          grep -Fq '<FilesMatch "^\.rotinas-gestao\.json$">' sistemas/.htaccess
+          grep -Fq '<FilesMatch "^\.rotinas-(?:gestao|vapid|subs|sent)\.json$">' sistemas/.htaccess
           grep -q 'GEB_PORTAL_SESSION_V2' portfolios/_core.php
           grep -q 'DirectoryIndex index.php' portfolios/.htaccess
           grep -q 'Require all denied' portfolios/.htaccess
           test ! -f portfolios/index.html
+          test -f sistemas/rotinas-app.js && node --check sistemas/rotinas-app.js
+          test -f sistemas/rotinas-sw.js && node --check sistemas/rotinas-sw.js
+          python3 -m json.tool sistemas/rotinas.webmanifest >/dev/null
+          python3 -m json.tool sistemas/composer.json >/dev/null
+          test -f sistemas/vendor/.htaccess
+          grep -q "geb-blog-conferir-publicacao" sistemas/rotinas-catalogo.php
+          test -f .github/workflows/alertas-rotinas.yml
+          php -r '$r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15"); $a=array_filter($r,fn($t)=>in_array((int)$d->format("N"),$t["dias"],true)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
+      - name: Validar dependências PHP de notificações
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: curl, mbstring, openssl
+          tools: composer:v2
+      - name: Testar instalação da biblioteca Web Push
+        run: |
+          composer install --working-dir=sistemas --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+          test -f sistemas/vendor/autoload.php
+          test -f sistemas/vendor/.htaccess
   deploy:
     if: github.event_name != 'pull_request'
     needs: validar
@@ -56,6 +75,21 @@ jobs:
             echo "::error::Configure HOST, USER e PASS nos secrets."
             exit 1
           }
+      - name: Preparar PHP para instalar a biblioteca Web Push
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: curl, mbstring, openssl
+          tools: composer:v2
+      - name: Instalar dependências Web Push
+        run: |
+          composer install --working-dir=sistemas --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+          test -f sistemas/vendor/autoload.php
+          test -f sistemas/vendor/.htaccess
+      - name: Gerar ícones para instalação PC e celular
+        run: |
+          python3 sistemas/gerar-icones.py
+          file sistemas/rotinas-icon-192.png sistemas/rotinas-icon-512.png
       - name: Instalar lftp
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
       - name: Publicar somente os novos módulos
@@ -71,6 +105,8 @@ jobs:
           cd public_html/painel
           rm -f meusite/index.html
           mirror -R --only-newer admsite admsite
+          # Proteção do diretório antes de transferir dados ou dependências.
+          put sistemas/.htaccess -o sistemas/.htaccess
           mirror -R --only-newer sistemas sistemas
           mirror -R --only-newer busca-comercial busca-comercial
           # Bloquear imediatamente o HTML legado público, antes de subir páginas PHP.
@@ -112,6 +148,22 @@ jobs:
           expect_redirect "/sistemas/pop.php"
           expect_redirect "/sistemas/rotinas.php"
           expect_forbidden "/sistemas/.rotinas-gestao.json"
+          expect_forbidden "/sistemas/.rotinas-subs.json"
+          expect_forbidden "/sistemas/.rotinas-vapid.json"
+          expect_forbidden "/sistemas/.rotinas-sent.json"
+          expect_forbidden "/sistemas/vendor/autoload.php"
+          for path in rotinas-app.js rotinas-sw.js rotinas.webmanifest rotinas-icon.svg rotinas-icon-192.png rotinas-icon-512.png; do
+            code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/$path")
+            echo "/sistemas/$path -> HTTP $code"
+            test "$code" = "200"
+          done
+          for path in rotinas-push.php rotinas-status.php; do
+            code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/$path")
+            echo "/sistemas/$path sem login -> HTTP $code"
+            test "$code" = "401"
+          done
+          code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/rotinas-disparar.php")
+          test "$code" = "403"
           expect_forbidden "/portfolios/index.html"
           expect_forbidden "/portfolios/_core.php"
 
