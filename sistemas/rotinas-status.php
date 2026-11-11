@@ -5,12 +5,13 @@ rp_jsonHeaders();
 rp_authenticate();
 $tz=new DateTimeZone('America/Sao_Paulo');
 $today=new DateTimeImmutable('today',$tz);
+require __DIR__.'/rotinas-recorrencias.php';
 $catalog=require __DIR__.'/rotinas-catalogo.php';
 try { $records=rp_data('.rotinas-gestao.json'); }
 catch (Throwable $e) { rp_fail(503,'Não foi possível consultar o registro de tarefas.'); }
 $statuses=[];
 foreach ($catalog as $id=>$task) {
-    if (!in_array((int)$today->format('N'),$task['dias'],true)) continue;
+    if (!pm_scheduled($task,$today)) continue;
     $statuses[$id]=[
         'hour'=>$task['hora'],
         'title'=>$task['titulo'],
