@@ -46,6 +46,18 @@ jobs:
           test -f sistemas/vendor/.htaccess
           grep -q "geb-blog-conferir-publicacao" sistemas/rotinas-catalogo.php
           test -f .github/workflows/alertas-rotinas.yml
+          php -r '$r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15"); $a=array_filter($r,fn($t)=>in_array((int)$d->format("N"),$t["dias"],true)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
+      - name: Validar dependências PHP de notificações
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: curl, mbstring, openssl
+          tools: composer:v2
+      - name: Testar instalação da biblioteca Web Push
+        run: |
+          composer install --working-dir=sistemas --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+          test -f sistemas/vendor/autoload.php
+          test -f sistemas/vendor/.htaccess
   deploy:
     if: github.event_name != 'pull_request'
     needs: validar
