@@ -30,6 +30,8 @@ if (!isset($_SESSION['rotinas_csrf'])) $_SESSION['rotinas_csrf'] = bin2hex(rando
 $tz = new DateTimeZone('America/Sao_Paulo');
 $today = new DateTimeImmutable('today', $tz);
 require __DIR__ . '/rotinas-recorrencias.php';
+require __DIR__ . '/rotinas-versao.php';
+$appVersion = pm_build_version();
 $tasks = require __DIR__ . '/rotinas-catalogo.php';
 uasort($tasks,static fn(array $a,array $b): int => strcmp($a['hora'],$b['hora']));
 
@@ -159,10 +161,12 @@ while (count($history) < 10) {
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Painel Mestre">
 <meta name="csrf-token" content="<?=esc($_SESSION['rotinas_csrf'])?>">
+<meta name="app-version" content="<?=esc($appVersion)?>">
 <link rel="manifest" href="/sistemas/rotinas.webmanifest">
 <link rel="icon" href="/sistemas/rotinas-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/sistemas/rotinas-icon-192.png">
-<script src="/sistemas/rotinas-app.js" defer></script>
+<script src="/sistemas/rotinas-app.js?v=<?=esc(substr($appVersion,0,12))?>" defer></script>
+<script src="/sistemas/rotinas-update.js?v=<?=esc(substr($appVersion,0,12))?>" defer></script>
 <title>Rotinas de execução | Painel Mestre GEB</title>
 <style>
 :root{color-scheme:light;--ink:#161b1a;--muted:#52605b;--line:#d8dfdb;--green:#cced51;--bg:#f4f5f2}
@@ -238,6 +242,15 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 .task-links{display:flex;flex-wrap:wrap;gap:9px;margin:10px 0 6px}
 .task-links a{font-weight:700;background:#fff;border:1px solid #aab7ad;border-radius:3px;padding:5px 9px;text-decoration:none}
 .task-rest{margin-top:5px}
+
+.app-update-banner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;background:#f4f8e7;border:1px solid #9da785;border-left:5px solid #778b39;padding:10px 13px;border-radius:4px;margin:0 0 13px}
+.app-update-banner strong{font-size:14px}
+.app-update-banner p{margin:1px 0 0;font-size:12px;color:var(--muted)}
+.app-update-actions{display:flex;gap:7px;flex-wrap:wrap}
+.app-update-actions button{font-size:12px;padding:7px 11px}
+.app-update-actions .primary{background:var(--green)}
+.app-update-check{font-size:12px!important;padding:7px 9px!important;background:#fff}
+[hidden]{display:none!important}
 .notifications-panel{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:5px;padding:12px 16px;margin:0 0 15px}
 .notifications-panel strong{font-size:14px}
 .notifications-panel p{font-size:12px;color:var(--muted);margin:2px 0 0}
@@ -271,8 +284,17 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
     <button type="button" class="primary" id="notify-enable">Ativar alertas</button>
     <button type="button" id="notify-disable" hidden>Desativar alertas</button>
     <button type="button" id="install-app" hidden>Instalar aplicativo</button>
+    <button type="button" class="app-update-check" id="app-update-check">Verificar versão</button>
   </div>
 </section>
+<div id="app-update-banner" class="app-update-banner" role="status" hidden>
+  <div><strong>Nova versão disponível</strong><p>Atualize quando terminar a ação atual.</p></div>
+  <div class="app-update-actions">
+    <button type="button" class="primary" id="app-update-now">Atualizar agora</button>
+    <button type="button" id="app-update-later">Depois</button>
+  </div>
+</div>
+<p class="meta" id="app-update-status" role="status">Verificando a versão do Painel Mestre...</p>
 <div class="toolbar">
 <a class="btn" href="?data=<?=esc($prev)?>" aria-label="Dia anterior">← Anterior</a>
 <form action="/sistemas/rotinas.php" method="get">
