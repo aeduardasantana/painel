@@ -19,6 +19,8 @@ if (($_SESSION['auth']??false)!==true || time()-(int)($_SESSION['auth_at']??0)>=
 }
 $_SESSION['auth_at']=time();
 require __DIR__.'/rotinas-recorrencias.php';
+require __DIR__.'/rotinas-versao.php';
+$appVersion = pm_build_version();
 $tasks=require __DIR__.'/rotinas-catalogo.php';
 $period=(int)($_GET['periodo']??30);
 if (!in_array($period,[7,30,90],true)) $period=30;
@@ -84,6 +86,8 @@ $doneRate=pm_percent($overall['feito'],$overall['total']);
 ?><!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
+<meta name="app-version" content="<?=htmlspecialchars($appVersion,ENT_QUOTES,'UTF-8')?>">
+<script src="/sistemas/rotinas-update.js?v=<?=htmlspecialchars(substr($appVersion,0,12),ENT_QUOTES,'UTF-8')?>" defer></script>
 <title>Indicadores de execução | Painel Mestre GEB</title>
 <style>
 :root{color-scheme:light;--ink:#141c16;--muted:#59635c;--line:#d5ddd4;--bg:#f5f6f3;--lime:#cdea52;--done:#26713d;--pending:#ae571a;--unmarked:#a4aea6}
@@ -95,6 +99,15 @@ a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #237245;o
 h1{font-size:clamp(28px,4vw,42px);letter-spacing:-.035em;margin:8px 0}
 h2{font-size:19px;letter-spacing:-.015em;margin:0 0 6px}
 .intro{color:var(--muted);margin:0 0 18px}.eyebrow{font-size:11px;font-weight:800;color:#415d3e;text-transform:uppercase;letter-spacing:.1em}
+
+.app-update-banner{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#f4f8e7;border:1px solid #9da785;border-left:5px solid #778b39;border-radius:4px;padding:10px 13px;margin:14px 0}
+.app-update-banner strong{font-size:14px}
+.app-update-banner p{font-size:12px;color:#59635c;margin:2px 0}
+.app-update-actions{display:flex;gap:8px}
+.app-update-actions button,.app-update-check{font:inherit;font-size:12px;padding:7px 10px;border:1px solid #88928a;background:#fff;border-radius:4px;cursor:pointer}
+.app-update-actions .primary{background:var(--lime)}
+.update-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+[hidden]{display:none!important}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
 .filters a{padding:8px 13px;background:#fff;border:1px solid var(--line);border-radius:4px;text-decoration:none;font-weight:700}
 .filters a[aria-current="true"]{background:var(--lime);border-color:#6e811e}
@@ -124,6 +137,17 @@ footer{font-size:12px;color:var(--muted);margin:30px 0;padding-top:15px;border-t
 <span class="eyebrow">Acompanhamento executivo</span>
 <h1>Desempenho das rotinas</h1>
 <p class="intro">Indicadores baseados nas marcações reais e nos horários já vencidos. Não incluem tarefas futuras.</p>
+<div class="update-tools">
+  <button type="button" class="app-update-check" id="app-update-check">Verificar versão</button>
+  <span id="app-update-status" role="status">Verificando versão...</span>
+</div>
+<div id="app-update-banner" class="app-update-banner" role="status" hidden>
+  <div><strong>Nova versão disponível</strong><p>Atualize quando terminar a consulta.</p></div>
+  <div class="app-update-actions">
+    <button type="button" class="primary" id="app-update-now">Atualizar agora</button>
+    <button type="button" id="app-update-later">Depois</button>
+  </div>
+</div>
 <nav class="filters" aria-label="Selecionar período">
 <?php foreach([7,30,90] as $d): ?><a href="?periodo=<?=$d?>" <?=$period===$d?'aria-current="true"':''?>><?=$d?> dias</a><?php endforeach;?>
 </nav>
