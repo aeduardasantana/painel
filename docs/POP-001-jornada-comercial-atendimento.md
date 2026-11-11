@@ -36,7 +36,7 @@ Identificar o que fazer, em qual sistema, em qual etapa e qual é a próxima dec
 
 ## Ramificação prioritária — palestra corporativa
 
-1. **Briefing (modelo já criado):** tema, objetivos, público, quantidade, formato, acessibilidade, local, data e duração; identificar PF/PJ e decisor. Modelo: https://docs.google.com/document/d/1VV0AlhtdJ097Sbo_iwrkroXetG44ib1k9RnYsktyEh8/edit
+1. **Briefing (formulário publicado; integração pendente):** tema, objetivos, público, quantidade, formato, acessibilidade, local, data e duração; identificar PF/PJ e decisor. Formulário público: https://docs.google.com/forms/d/e/1FAIpQLSfM6ACffC98kNLnzf3iWG7PqAVndVvaZIOBgFwXE9g20_rZ8A/viewform. Modelo de análise interna: https://docs.google.com/document/d/1VV0AlhtdJ097Sbo_iwrkroXetG44ib1k9RnYsktyEh8/edit
 2. **Proposta (modelo já criado):** derivar somente do briefing aprovado, com escopo, valores, validade, despesas e condições de pagamento; versionar e registrar envio. Modelo: https://docs.google.com/document/d/1Ug6wzrV24IqRATlvhRhUyAZdwuDnVjRQ9KE4YCV_n9s/edit. Emissão automática ainda pendente.
 3. **Negociação e aceite da proposta:** registrar versão aprovada e confirmação escrita; ainda não é contrato assinado.
 4. **Contrato:** gerar a partir dos termos aceitos e encaminhar para conferência/assinatura; minuta criada em https://docs.google.com/document/d/1vY4z2aGU1iTWmwaPNHu6t1QVlFGglfpKDFAWoashruA/edit, com revisão jurídica pendente.
