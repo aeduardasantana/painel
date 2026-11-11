@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $task = (string)($_POST['tarefa'] ?? '');
     $status = (string)($_POST['status'] ?? '');
     if (!hash_equals($_SESSION['rotinas_csrf'], $csrf) || !array_key_exists($task, $tasks)
-        || !scheduled($tasks[$task], $selected) || !in_array($status, ['feito','pendente','limpar'], true)) {
+        || !scheduled($tasks[$task], $selected) || !in_array($status, ['feito','pendente','cancelado','limpar'], true)) {
         http_response_code(400); exit('Solicitação inválida. Nenhuma marcação foi alterada.');
     }
     $handle = openStore($store, 'c+');
@@ -127,12 +127,14 @@ $dayRecords = $entries[$key] ?? [];
 $total = countScheduled($tasks, $selected);
 $done = 0;
 $pending = 0;
+$cancelled = 0;
 foreach ($tasks as $id => $_task) {
     $state = (string)($dayRecords[$id]['status'] ?? '');
     if ($state === 'feito' && scheduled($_task, $selected)) ++$done;
     if ($state === 'pendente' && scheduled($_task, $selected)) ++$pending;
+    if ($state === 'cancelado' && scheduled($_task, $selected)) ++$cancelled;
 }
-$unmarked = $total - $done - $pending;
+$unmarked = $total - $done - $pending - $cancelled;
 $days = ['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
 $weekdayName = $days[(int)$selected->format('w')];
 $prev = $selected->modify('-1 day')->format('Y-m-d');
@@ -142,13 +144,15 @@ $cursor = $today;
 while (count($history) < 10) {
     $dk = $cursor->format('Y-m-d');
     $complete = 0;
+    $cancelledCount = 0;
     $scheduledCount = 0;
     foreach ($tasks as $id => $item) {
         if (!scheduled($item, $cursor)) continue;
         ++$scheduledCount;
         if (($entries[$dk][$id]['status'] ?? '') === 'feito') ++$complete;
+        if (($entries[$dk][$id]['status'] ?? '') === 'cancelado') ++$cancelledCount;
     }
-    $history[] = ['date'=>$dk, 'done'=>$complete, 'total'=>$scheduledCount];
+    $history[] = ['date'=>$dk, 'done'=>$complete, 'cancelled'=>$cancelledCount, 'total'=>$scheduledCount];
     $cursor = $cursor->modify('-1 day');
 }
 
@@ -188,7 +192,7 @@ button:hover,.btn:hover{background:#ecf0e5}
 button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #31754a;outline-offset:3px}
 .primary{background:var(--green);border-color:#70871d}
 .primary:hover{background:#bbdb46}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
 .stat{padding:15px;background:#fff;border:1px solid var(--line);border-radius:5px}
 .stat strong{font-size:30px;line-height:1;display:block}.stat span{font-size:12px;color:var(--muted)}
 .tasks{display:grid;gap:12px}
@@ -201,6 +205,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 }
 .task[data-state="pendente"]{
   background:#fff3e9;border-color:#e4b695;border-left-color:#ab4d17;
+}
+.task[data-state="cancelado"]{
+  background:#eff3f7;border-color:#b6c8d4;border-left-color:#416479;
 }
 .task-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
 .time{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
@@ -220,6 +227,10 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
   color:#fff;background:#99400e;border-color:#99400e;
 }
 .task[data-state="pendente"] .status::before{content:"!";font-size:16px}
+.task[data-state="cancelado"] .status{
+  color:#fff;background:#385a70;border-color:#385a70;
+}
+.task[data-state="cancelado"] .status::before{content:"×";font-size:17px}
 .task form{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 .task form button{min-width:90px;padding:7px 10px;font-size:13px;background:#fff;color:var(--ink);border:1px solid #89978d}
 .task form button:hover{background:#f0f2ed}
@@ -232,6 +243,9 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 .task[data-state="pendente"] button[value="pendente"]{
   background:#99400e;border-color:#99400e;color:#fff;
   box-shadow:inset 0 0 0 1px #99400e;
+}
+.task[data-state="cancelado"] button[value="cancelado"]{
+  background:#385a70;border-color:#385a70;color:#fff;
 }
 .task button[value="limpar"]{font-weight:600}
 .headrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -258,7 +272,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 .notify-buttons button{font-size:12px;padding:8px 12px}
 [hidden]{display:none!important}
 @media(forced-colors:active){
-  .task[data-state="feito"],.task[data-state="pendente"]{border-left-width:9px}
+  .task[data-state="feito"],.task[data-state="pendente"],.task[data-state="cancelado"]{border-left-width:9px}
   .task button[aria-pressed="true"]{outline:2px solid Highlight}
 }
 .meta{font-size:12px;color:var(--muted)}
@@ -270,7 +284,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
 .history a[aria-current="date"]{border-color:#4b6d26;background:#f2f8d9}
 .history b{display:block;font-size:12px}.history span{font-size:12px;color:var(--muted)}
 footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-top:1px solid var(--line)}
-@media(max-width:570px){.stats{gap:6px}.stat{padding:10px}.task-header{flex-direction:row;gap:8px}.status{padding:5px 7px;font-size:10px}.task{padding:11px}.toolbar{gap:7px}.task form button{min-width:75px}}
+@media(max-width:570px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.stat{padding:10px}.task-header{flex-direction:row;gap:8px}.status{padding:5px 7px;font-size:10px}.task{padding:11px}.toolbar{gap:7px}.task form button{min-width:75px}}
 </style>
 </head><body>
 <header><div class="brand">GEB · Painel Mestre</div><nav><a href="/sistemas/">Voltar ao Portal de Aplicações</a></nav></header>
@@ -309,6 +323,7 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
 <div class="stats" aria-label="Resumo do dia">
 <div class="stat"><strong><?=$done?></strong><span>Feitas</span></div>
 <div class="stat"><strong><?=$pending?></strong><span>Pendentes marcadas</span></div>
+<div class="stat"><strong><?=$cancelled?></strong><span>Canceladas</span></div>
 <div class="stat"><strong><?=$unmarked?></strong><span>Sem marcação</span></div>
 </div>
 <?php if ($total === 0): ?>
@@ -319,7 +334,7 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
 if (!scheduled($task, $selected)) continue;
 $record=$dayRecords[$id] ?? [];
 $state=(string)($record['status'] ?? '');
-$label=$state==='feito'?'Concluído':($state==='pendente'?'Pendente':'Sem marcação');
+$label=$state==='feito'?'Concluído':($state==='pendente'?'Pendente':($state==='cancelado'?'Cancelado':'Sem marcação'));
 ?>
 <article class="task" data-state="<?=esc($state)?>" data-task-id="<?=esc($id)?>" data-hour="<?=esc($task['hora'])?>">
 <div class="task-header"><div>
@@ -341,6 +356,7 @@ $label=$state==='feito'?'Concluído':($state==='pendente'?'Pendente':'Sem marca�
 <input type="hidden" name="tarefa" value="<?=esc($id)?>">
 <button class="primary" name="status" value="feito" type="submit" aria-pressed="<?=$state==='feito'?'true':'false'?>" aria-label="Marcar como feito: <?=esc($task['titulo'])?>">Feito</button>
 <button name="status" value="pendente" type="submit" aria-pressed="<?=$state==='pendente'?'true':'false'?>" aria-label="Marcar como pendente: <?=esc($task['titulo'])?>">Pendente</button>
+<button name="status" value="cancelado" type="submit" aria-pressed="<?=$state==='cancelado'?'true':'false'?>" aria-label="Registrar cancelamento desta ocorrência: <?=esc($task['titulo'])?>">Cancelado</button>
 <?php if ($state !== ''): ?><button name="status" value="limpar" type="submit" aria-label="Remover marcação: <?=esc($task['titulo'])?>">Desmarcar</button><?php endif; ?>
 </form>
 </div>
@@ -353,9 +369,9 @@ $label=$state==='feito'?'Concluído':($state==='pendente'?'Pendente':'Sem marca�
 <?php foreach ($history as $item): ?>
 <a href="?data=<?=esc($item['date'])?>" <?=$item['date']===$key?'aria-current="date"':''?>>
 <b><?=esc((new DateTimeImmutable($item['date'], $tz))->format('d/m/Y'))?></b>
-<span><?=$item['done']?> de <?=$item['total']?> concluídas</span>
+<span><?=$item['done']?> concluídas, <?=$item['cancelled']?> canceladas de <?=$item['total']?></span>
 </a>
 <?php endforeach; ?>
 </div></section>
-<footer>As marcações são manuais e não certificam automaticamente a execução externa. O histórico permanece no servidor, não no GitHub. Os lembretes dependem da permissão de notificações e da compatibilidade do navegador/dispositivo.</footer>
+<footer>Cancelado registra somente esta ocorrência no painel; não cancela agendamentos na Amplimed, Meta Business Suite ou plataformas externas. As marcações são manuais e não certificam automaticamente a execução externa. O histórico permanece no servidor, não no GitHub. Os lembretes dependem da permissão de notificações e da compatibilidade do navegador/dispositivo.</footer>
 </main></body></html>

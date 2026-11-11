@@ -117,7 +117,7 @@
       tasks=r.tasks||{};
     } catch (_) { return; }
     for (const [id,task] of Object.entries(tasks)) {
-      if (task.status==='feito') continue;
+      if (task.status==='feito' || task.status==='cancelado') continue;
       const [hour,minute]=(task.hour||'').split(':').map(Number);
       if (!Number.isFinite(hour) || !Number.isFinite(minute)) continue;
       const diff=now.minute-(hour*60+minute);
