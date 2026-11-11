@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<title>Painel Mestre GEB</title>
+<rect width="512" height="512" rx="62" fill="#151c17"/>
+<path fill="#cced51" d="M100 108h312v46H100zM100 222h50v50h-50zM192 224h220v44H192zM100 335h50v50h-50zM192 337h220v44H192z"/>
+<path fill="none" stroke="#151c17" stroke-width="12" d="m108 244 13 13 21-27"/>
+</svg>
