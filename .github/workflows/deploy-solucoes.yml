@@ -50,7 +50,7 @@ jobs:
           grep -q "studio.youtube.com/channel/UCanvdpcTbEXJa4xXeeHjbig/content" sistemas/rotinas-catalogo.php
           php -r 'require "sistemas/rotinas-recorrencias.php"; $c=require "sistemas/rotinas-catalogo.php"; $tz=new DateTimeZone("America/Sao_Paulo"); $f=fn($s)=>new DateTimeImmutable($s,$tz); if (!pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-11")) || pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-18")) || !pm_scheduled($c["saude-qua-1430-quinzenal"],$f("2026-11-25")) || !pm_scheduled($c["pinterest-planejar-agendar-mes"],$f("2026-11-20")) || pm_scheduled($c["pinterest-planejar-agendar-mes"],$f("2026-11-21")))exit(1);'
           test -f .github/workflows/alertas-rotinas.yml
-          php -r '$r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15"); $a=array_filter($r,fn($t)=>in_array((int)$d->format("N"),$t["dias"],true)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $r=require "sistemas/rotinas-catalogo.php"; $d=new DateTimeImmutable("2026-11-15",new DateTimeZone("America/Sao_Paulo")); $a=array_filter($r,fn($t)=>pm_scheduled($t,$d)); if(count($a)!==1 || !isset($a["geb-blog-conferir-publicacao"]))exit(1);'
       - name: Validar dependências PHP de notificações
         uses: shivammathur/setup-php@v2
         with:
