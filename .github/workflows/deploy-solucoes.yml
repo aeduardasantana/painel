@@ -74,6 +74,10 @@ jobs:
           composer install --working-dir=sistemas --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
           test -f sistemas/vendor/autoload.php
           test -f sistemas/vendor/.htaccess
+      - name: Gerar ícones para instalação PC e celular
+        run: |
+          python3 sistemas/gerar-icones.py
+          file sistemas/rotinas-icon-192.png sistemas/rotinas-icon-512.png
       - name: Instalar lftp
         run: sudo apt-get update -qq && sudo apt-get install -y -qq lftp
       - name: Publicar somente os novos módulos
@@ -136,7 +140,7 @@ jobs:
           expect_forbidden "/sistemas/.rotinas-vapid.json"
           expect_forbidden "/sistemas/.rotinas-sent.json"
           expect_forbidden "/sistemas/vendor/autoload.php"
-          for path in rotinas-app.js rotinas-sw.js rotinas.webmanifest rotinas-icon.svg; do
+          for path in rotinas-app.js rotinas-sw.js rotinas.webmanifest rotinas-icon.svg rotinas-icon-192.png rotinas-icon-512.png; do
             code=$(curl --silent --show-error --max-time 25 -o /dev/null -w '%{http_code}' "$origin/sistemas/$path")
             echo "/sistemas/$path -> HTTP $code"
             test "$code" = "200"
