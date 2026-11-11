@@ -47,12 +47,13 @@ try {
         ],
     ],['TTL'=>300,'urgency'=>'normal']);
     $records=rp_data('.rotinas-gestao.json');
+    require __DIR__.'/rotinas-recorrencias.php';
     $tasks=require __DIR__.'/rotinas-catalogo.php';
     $day=$today->format('Y-m-d');
     $sentCount=0; $failedCount=0; $dueCount=0;
     rp_mutate('.rotinas-sent.json',function(array $logged) use ($subscriptions,$webPush,$records,$tasks,$day,$now,$today,&$sentCount,&$failedCount,&$dueCount): array {
         foreach ($tasks as $id=>$task) {
-            if (!in_array((int)$today->format('N'),$task['dias'],true)) continue;
+            if (!pm_scheduled($task,$today)) continue;
             if (($records[$day][$id]['status']??'')==='feito') continue;
             [$h,$m]=array_map('intval',explode(':',$task['hora']));
             $due=$today->setTime($h,$m);
