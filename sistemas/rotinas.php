@@ -77,8 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $csrf = (string)($_POST['csrf'] ?? '');
     $task = (string)($_POST['tarefa'] ?? '');
     $status = (string)($_POST['status'] ?? '');
-    if (!hash_equals($_SESSION['rotinas_csrf'], $csrf) || !scheduled($tasks[$task], $selected)
-        || !array_key_exists($task, $tasks) || !in_array($status, ['feito','pendente','limpar'], true)) {
+    if (!hash_equals($_SESSION['rotinas_csrf'], $csrf) || !array_key_exists($task, $tasks)
+        || !scheduled($tasks[$task], $selected) || !in_array($status, ['feito','pendente','limpar'], true)) {
         http_response_code(400); exit('Solicitação inválida. Nenhuma marcação foi alterada.');
     }
     $handle = openStore($store, 'c+');
