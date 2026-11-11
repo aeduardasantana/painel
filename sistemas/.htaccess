@@ -7,3 +7,6 @@ RewriteRule ^(?:index|pop)\.html$ - [F,L,NC]
 <FilesMatch "^\.(?:ht|env)|^(?:\.geb-systems-auth\.php|\.systems-pass\.php)$">
 Require all denied
 </FilesMatch>
+<FilesMatch "^\.rotinas-gestao\.json$">
+Require all denied
+</FilesMatch>
