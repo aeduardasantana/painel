@@ -29,7 +29,9 @@ if (!isset($_SESSION['rotinas_csrf'])) $_SESSION['rotinas_csrf'] = bin2hex(rando
 
 $tz = new DateTimeZone('America/Sao_Paulo');
 $today = new DateTimeImmutable('today', $tz);
+require __DIR__ . '/rotinas-recorrencias.php';
 $tasks = require __DIR__ . '/rotinas-catalogo.php';
+uasort($tasks,static fn(array $a,array $b): int => strcmp($a['hora'],$b['hora']));
 
 function validDay(string $value, DateTimeZone $tz): ?DateTimeImmutable {
     if (!preg_match('/^\d{4}-\d{2}-\d{2}$/D', $value)) return null;
@@ -43,7 +45,7 @@ function esc(string $value): string {
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 function scheduled(array $task, DateTimeImmutable $date): bool {
-    return in_array((int)$date->format('N'), $task['dias'] ?? [], true);
+    return pm_scheduled($task, $date);
 }
 function countScheduled(array $tasks, DateTimeImmutable $date): int {
     $n = 0;
@@ -228,6 +230,7 @@ button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #3175
   box-shadow:inset 0 0 0 1px #99400e;
 }
 .task button[value="limpar"]{font-weight:600}
+.headrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .task-details{margin:7px 0 2px;font-size:13px;color:#405348}
 .task-details summary{cursor:pointer;font-weight:700;display:inline-block;padding:2px 0;text-decoration:underline;text-decoration-color:#a7b2a9;text-underline-offset:3px}
 .task-details[open]{border-top:1px dashed #afbbb1;margin-top:12px;padding-top:9px}
@@ -260,7 +263,7 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
 <header><div class="brand">GEB · Painel Mestre</div><nav><a href="/sistemas/">Voltar ao Portal de Aplicações</a></nav></header>
 <main>
 <div class="eyebrow">Execução e acompanhamento</div>
-<h1>Rotinas diárias</h1>
+<div class="headrow"><h1>Rotinas diárias</h1><a class="btn" href="/sistemas/rotinas-desempenho.php">Ver gráficos de desempenho ↗</a></div>
 <p class="subtitle">Atividades recorrentes, com marcações por data e alertas no horário de Brasília.</p>
 <section class="notifications-panel" aria-label="Alertas e instalação do aplicativo">
   <div><strong>Alertas de compromissos</strong><p id="notify-status" role="status">Verificando disponibilidade das notificações.</p></div>
