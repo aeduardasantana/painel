@@ -162,4 +162,65 @@ return [
         'dia_mes'=>12,
         'ativo_desde'=>'2026-11-12'
     ],
+
+    // GEB Educação: inventário, linha editorial, produção e espelhamento — 13/11/2026.
+    'geb-educacao-curadoria-mensal-bolsas' => [
+        'hora'=>'12:30',
+        'titulo'=>'Atualizar a curadoria mensal de bolsas do GEB Educação',
+        'area'=>'GEB Educação · Portfólio / Pesquisa',
+        'descricao'=>'Pesquisar as bolsas da unidade e atualizar o inventário de oportunidades verificadas para a produção editorial.',
+        'observacoes'=>'Início 13/11/2026, recorrência no dia 13 de cada mês. Horário inicial provisório. Examinar separadamente (A) ofertas de instituições em que o GEB atua como polo, com remuneração informada na adesão e nas mensalidades, e (B) ofertas de outras instituições e localidades, com remuneração informada somente na adesão. No buscador do Bolsa Mais Brasil, Instituição é filtro opcional. Priorizar GO/DF e ofertas online antes de ampliar para outras localidades. Na primeira varredura, excluir Técnico por Competência e Idiomas conforme a seleção visual enviada, mas manter Cursos Técnicos e EJA + Técnico. Registrar modalidade, curso, instituição, cidade/UF, formato, adesão, mensalidades, desconto, disponibilidade, link de atribuição à unidade GEB, data de conferência e classificação comercial. Não apresentar levantamento parcial como catálogo completo nem divulgar valores sem revalidação. Gerar shortlist de pautas. Marcar Feito apenas após salvar a curadoria e as evidências.',
+        'links'=>[
+            ['titulo'=>'Bolsas vinculadas ao polo GEB','url'=>'https://gebeducacao.lovable.app/bolsas'],
+            ['titulo'=>'Buscador de bolsas da unidade GEB','url'=>'https://www.bolsamaisbrasil.com.br/geb/bolsas'],
+            ['titulo'=>'Acervo de catálogos no Drive','url'=>'https://drive.google.com/drive/folders/14K8rDaJmjUVql9NjF-YLKI4F7gvlEm0N?usp=drive_link']
+        ],
+        'frequencia'=>'mensal','dia_mes'=>13,'ativo_desde'=>'2026-11-13'
+    ],
+    'geb-educacao-revisao-editorial-youtube' => [
+        'hora'=>'14:00',
+        'titulo'=>'Definir a linha editorial integrada do YouTube e Instagram GEB Educação',
+        'area'=>'GEB Educação · Estratégia Editorial',
+        'descricao'=>'Deliberar e registrar a matriz editorial dos vídeos, segmentação por oferta e canais de distribuição.',
+        'observacoes'=>'Execução única em 13/11/2026. Horário provisório. Definir editorias, público, formato, grade, critérios de reaproveitamento, pauta por necessidade educacional, links e CTAs. Distinguir bolsas do polo (adesão e mensalidades), bolsas externas (somente adesão) e cursos livres com precificação própria; nenhuma oferta livre deve ser chamada de bolsa sem lastro. O YouTube Bolsa Mais deve orientar trajetórias educacionais e não somente listar produtos. Considerar como hipótese de alcance o interesse de homens jovens e a assinatura de membro Patrocinador do canal Sobreviva ao Brasil, sem presumir benefício publicitário ou conversão garantida. Confrontar hipóteses com dados do YouTube Studio. Salvar decisões e calendário; marcar Feito apenas após aprovar a linha editorial.',
+        'links'=>[
+            ['titulo'=>'YouTube Bolsa Mais Trindade','url'=>'https://www.youtube.com/@bolsamais_trindadego'],
+            ['titulo'=>'Instagram Bolsa Mais','url'=>'https://www.instagram.com/bolsamais_trindadego/'],
+            ['titulo'=>'Instagram Educação EAD Brasil','url'=>'https://www.instagram.com/educacaoeadbrasil/'],
+            ['titulo'=>'Canal de referência Sobreviva ao Brasil','url'=>'https://www.youtube.com/@sobrevivaaobrasil'],
+            ['titulo'=>'Catálogo histórico de cursos livres','url'=>'https://gebeducacao.lovable.app/cursos']
+        ],
+        'frequencia'=>'unica','data_unica'=>'2026-11-13','ativo_desde'=>'2026-11-13'
+    ],
+    'geb-educacao-videos-mensais' => [
+        'hora'=>'15:30',
+        'titulo'=>'Produzir e agendar vídeos mensais do GEB Educação',
+        'area'=>'GEB Educação · Comunicação / Marketing',
+        'descricao'=>'Produzir em lote imagens e vídeos no Canva e agendar conteúdo para YouTube, Instagram e Facebook.',
+        'observacoes'=>'Início 13/11/2026, recorrência todo dia 13. Horário inicial provisório. Usar a curadoria verificada e a matriz editorial aprovada. Selecionar pautas, validar a origem da oferta (polo, bolsa externa ou curso livre), gerar imagens, preparar roteiro, capa e legenda, montar os vídeos no modelo do Canva, exportar e organizar arquivos no Drive. Agendar YouTube e perfis Instagram adequados; reaproveitar no Facebook quando pertinente. Cada post do Instagram deve gerar espelho correspondente na página /instagram, de modo manual enquanto a automação não for validada. Registrar URLs, datas, horário e canal de destino; conferir agendamento real. Não declarar publicação efetiva apenas pelo agendamento. Marcar Feito somente após completar e conferir a programação do ciclo.',
+        'links'=>[
+            ['titulo'=>'Uploads no Canva','url'=>'https://www.canva.com/folder/FAHWBMCg_IE'],
+            ['titulo'=>'Modelo de vídeo no Canva','url'=>'https://canva.link/0o9u6kvp34dy8nz'],
+            ['titulo'=>'Drive de produção GEB Educação','url'=>'https://drive.google.com/drive/folders/1KMV4-41Gn_S5AvAtn1ut9tqwye1N5OCO?usp=drive_link'],
+            ['titulo'=>'YouTube Bolsa Mais Trindade','url'=>'https://www.youtube.com/@bolsamais_trindadego'],
+            ['titulo'=>'Instagram Educação EAD Brasil','url'=>'https://www.instagram.com/educacaoeadbrasil/'],
+            ['titulo'=>'Facebook Educação EAD Brasil','url'=>'https://www.facebook.com/educacaoeadbrasil'],
+            ['titulo'=>'Instagram Bolsa Mais','url'=>'https://www.instagram.com/bolsamais_trindadego/'],
+            ['titulo'=>'Página da bio GEB Educação','url'=>'https://gebeducacao.grupoeduardabispo.com.br/instagram']
+        ],
+        'frequencia'=>'mensal','dia_mes'=>13,'ativo_desde'=>'2026-11-13'
+    ],
+    'geb-educacao-automacao-espelho-bio' => [
+        'hora'=>'17:00',
+        'titulo'=>'Implementar agendamento do espelho de posts na bio GEB Educação',
+        'area'=>'GEB Educação · Tecnologia / Comunicação',
+        'descricao'=>'Auditar e implementar publicação programada de cartões correspondentes aos posts do Instagram.',
+        'observacoes'=>'Execução única em 13/11/2026; horário provisório. Auditar código, hospedagem, armazenamento e manutenção da página /instagram antes de alterar o funcionamento. Projetar cadastro único de título, imagem, resumo, perfil de origem, URL do destino, data e hora (America/Sao_Paulo), com status Rascunho/Aprovado/Agendado/Publicado/Cancelado. Programar exibição na bio, permitir editar/cancelar, prevenir duplicidades e verificar links. Não presumir que agendamento na bio comprova publicação efetiva no Instagram: confirmação automática requer integração autorizada; adotar conferência manual até validá-la. Priorizar solução de baixo custo sem APIs pagas e prever rollback. Marcar Feito somente após testes de publicação, cancelamento e visualização pública.',
+        'links'=>[
+            ['titulo'=>'Página de espelhos GEB Educação','url'=>'https://gebeducacao.grupoeduardabispo.com.br/instagram'],
+            ['titulo'=>'Instagram Educação EAD Brasil','url'=>'https://www.instagram.com/educacaoeadbrasil/'],
+            ['titulo'=>'Instagram Bolsa Mais','url'=>'https://www.instagram.com/bolsamais_trindadego/']
+        ],
+        'frequencia'=>'unica','data_unica'=>'2026-11-13','ativo_desde'=>'2026-11-13'
+    ],
 ];
