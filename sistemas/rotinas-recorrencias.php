@@ -21,6 +21,10 @@ function pm_scheduled(array $task, DateTimeImmutable $date): bool {
             // Âncora incluída; não criar ocorrência para datas anteriores à referência.
             $days=(int)$anchorDay->diff($date)->format('%r%a');
             return $days>=0 && $days%14===0;
+        case 'unica':
+            // Atividade pontual: aparece exclusivamente na data indicada, preservando o histórico.
+            $day=(string)($task['data_unica']??'');
+            return $day!=='' && $date->format('Y-m-d')===$day;
         case 'mensal':
             return (int)$date->format('j') === (int)($task['dia_mes']??0);
         case 'intervalo_dias':
