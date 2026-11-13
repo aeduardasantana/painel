@@ -134,7 +134,7 @@ h2{font-size:19px;letter-spacing:-.015em;margin:0 0 6px}
 footer{font-size:12px;color:var(--muted);margin:30px 0;padding-top:15px;border-top:1px solid var(--line)}
 @media(max-width:730px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-row,.metric-row.compact{grid-template-columns:95px minmax(60px,1fr) 64px;gap:7px}.metric-label{font-size:11px}.metric-count{font-size:11px}.panel{padding:13px}}
 </style></head><body>
-<header><span class="brand">GEB · Painel Mestre</span><a href="/sistemas/rotinas.php">Voltar às rotinas</a></header>
+<header><span class="brand">GEB · Painel Mestre</span><nav><a href="/sistemas/editorial.php">Central Editorial</a> · <a href="/sistemas/rotinas.php">Voltar às rotinas</a></nav></header>
 <main>
 <span class="eyebrow">Acompanhamento executivo</span>
 <h1>Desempenho das rotinas</h1>
