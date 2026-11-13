@@ -287,7 +287,7 @@ footer{font-size:12px;color:var(--muted);margin:35px 0;padding-top:14px;border-t
 @media(max-width:570px){.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.stat{padding:10px}.task-header{flex-direction:row;gap:8px}.status{padding:5px 7px;font-size:10px}.task{padding:11px}.toolbar{gap:7px}.task form button{min-width:75px}}
 </style>
 </head><body>
-<header><div class="brand">GEB · Painel Mestre</div><nav><a href="/sistemas/">Voltar ao Portal de Aplicações</a></nav></header>
+<header><div class="brand">GEB · Painel Mestre</div><nav><a href="/sistemas/editorial.php">Central Editorial</a> · <a href="/sistemas/">Portal de Aplicações</a></nav></header>
 <main>
 <div class="eyebrow">Execução e acompanhamento</div>
 <div class="headrow"><h1>Rotinas diárias</h1><a class="btn" href="/sistemas/rotinas-desempenho.php">Ver gráficos de desempenho ↗</a></div>
