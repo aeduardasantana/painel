@@ -60,6 +60,8 @@ jobs:
           grep -q "pinterest-planejar-agendar-mes" sistemas/rotinas-catalogo.php
           grep -q "eduarda-bispo-gravar-conteudo-mensal" sistemas/rotinas-catalogo.php
           grep -q "eduarda-bispo-agendar-conteudo-mensal" sistemas/rotinas-catalogo.php
+          grep -q "eduarda-bispo-agendar-stories-20261211" sistemas/rotinas-catalogo.php
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $c=require "sistemas/rotinas-catalogo.php"; $t=$c["eduarda-bispo-agendar-stories-20261211"]; $z=new DateTimeZone("America/Sao_Paulo"); $d=fn($x)=>new DateTimeImmutable($x,$z); if(!pm_scheduled($t,$d("2026-12-11")) || pm_scheduled($t,$d("2026-12-10")) || pm_scheduled($t,$d("2027-12-11")) || !str_contains($t["observacoes"],"provisório")) exit(1);'
           php -r 'require "sistemas/rotinas-recorrencias.php"; $tasks=require "sistemas/rotinas-catalogo.php"; $tz=new DateTimeZone("America/Sao_Paulo"); $d=fn($x)=>new DateTimeImmutable($x,$tz); foreach(["eduarda-bispo-gravar-conteudo-mensal","eduarda-bispo-agendar-conteudo-mensal"] as $id){$t=$tasks[$id];if(!pm_scheduled($t,$d("2026-11-12")) || pm_scheduled($t,$d("2026-11-13")) || !pm_scheduled($t,$d("2026-12-12")) || pm_scheduled($t,$d("2026-12-13"))) exit(1);}'
           grep -Fq "['feito','pendente','cancelado','limpar']" sistemas/rotinas.php
           grep -q 'value="cancelado"' sistemas/rotinas.php
