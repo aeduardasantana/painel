@@ -239,4 +239,19 @@ return [
         'data_unica'=>'2026-12-11',
         'ativo_desde'=>'2026-12-11'
     ],
+    'geb-tiktok-agendar-videos-20261202' => [
+        'hora'=>'14:00',
+        'titulo'=>'Agendar vídeos do TikTok do GEB',
+        'area'=>'GEB Institucional · Comunicação / TikTok',
+        'descricao'=>'Programar os próximos vídeos no TikTok @grupoeduardabispo e conferir os agendamentos.',
+        'observacoes'=>'Compromisso pontual em 02/12/2026, às 14h (horário provisório porque não foi especificado). Esta é uma tarefa de programação editorial, não uma afirmação de que os vídeos já estão agendados. Conferir a pauta do GEB, legendas, formato vertical, direitos de uso, materiais originais e os horários de cada publicação; entrar no TikTok da conta correta para realizar e confirmar os agendamentos. Registrar a situação dos vídeos na Central Editorial sob a marca GEB e canal TikTok @grupoeduardabispo. Marcar Feito apenas após conferir o resultado na própria plataforma. A tarefa não substitui a rotina de produção nem agenda os vídeos automaticamente.',
+        'links'=>[
+            ['titulo'=>'TikTok GEB · @grupoeduardabispo','url'=>'https://www.tiktok.com/@grupoeduardabispo'],
+            ['titulo'=>'Acervo editorial GEB','url'=>'https://drive.google.com/drive/folders/1YqecIpyIHQ7cW4yYsalJfFOl_VYKXoWR'],
+            ['titulo'=>'Central Editorial do Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-12-02',
+        'ativo_desde'=>'2026-12-02'
+    ],
 ];
