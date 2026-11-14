@@ -285,4 +285,20 @@ return [
         'data_unica'=>'2026-11-27',
         'ativo_desde'=>'2026-11-27'
     ],
+    'eduarda-analisar-cortes-anete-20261116' => [
+        'hora'=>'15:00',
+        'titulo'=>'Analisar posicionamento de Anete Guimarães a partir de cortes de aulas e palestras',
+        'area'=>'Eduarda Bispo · Benchmarking / Posicionamento',
+        'descricao'=>'Assistir a trechos curtos de aulas e palestras, documentar os padrões de comunicação e avaliar estratégias aplicáveis ao posicionamento de Eduarda Bispo.',
+        'observacoes'=>'Compromisso pontual para segunda-feira, 16/11/2026, às 15h (horário provisório). PRIORIDADE: assistir aos cortes reais de aulas e palestras de Anete Guimarães, não limitar a análise a entrevistas, descrição do canal ou vídeos completos. Localizar cortes e trechos curtos no canal indicado e, se necessário, nos resultados de busca do YouTube, verificando autoria, origem e contexto da palestra original antes de tomar conclusões. Para cada corte relevante, anotar o link e observar: abertura/gancho, tema, argumento, organização da fala, referências e alegações, ritmo, edição, duração, legendas, contexto da aula, proximidade com a audiência, elementos de autoridade e chamada para ação. Separar fato verificável, estratégia comunicacional e inferência; não reproduzir trechos de terceiros ou confundir ideias originais com a edição de canais de cortes. Concluir com aprendizados pertinentes e limites de adaptação para a marca Eduarda Bispo, sem misturá-la à comunicação institucional do GEB. Registrar observações na pasta editorial/na Central Editorial. Marcar Feito somente após visualizar os cortes e documentar a análise.',
+        'links'=>[
+            ['titulo'=>'Canal YouTube Anete Guimarães','url'=>'https://www.youtube.com/aneteguimaraes'],
+            ['titulo'=>'Buscar cortes de aulas e palestras no YouTube','url'=>'https://www.youtube.com/results?search_query=Anete+Guimar%C3%A3es+cortes+aulas+palestras'],
+            ['titulo'=>'Pasta editorial de Eduarda Bispo','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Central Editorial do Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-11-16',
+        'ativo_desde'=>'2026-11-16'
+    ],
 ];
