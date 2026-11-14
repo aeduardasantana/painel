@@ -254,4 +254,35 @@ return [
         'data_unica'=>'2026-12-02',
         'ativo_desde'=>'2026-12-02'
     ],
+    'eduarda-linkedin-benchmarking-20261127' => [
+        'hora'=>'14:00',
+        'titulo'=>'Agendar próximos artigos Benchmarking com Duarda no LinkedIn',
+        'area'=>'Eduarda Bispo · LinkedIn / Conteúdo Autoral',
+        'descricao'=>'Revisar, programar e conferir os próximos artigos da série Benchmarking com Duarda no LinkedIn de Eduarda Bispo.',
+        'observacoes'=>'Compromisso pontual para sexta-feira, 27/11/2026, às 14h (horário provisório, não informado). Selecionar os artigos já preparados para a série Benchmarking com Duarda, validar títulos, referências, datas, texto e imagens, abrir a conta correta do LinkedIn e conferir cada agendamento. Consultar o calendário editorial próprio de Eduarda Bispo na pasta do Drive. Registrar canais e datas efetivamente agendados na Central Editorial. Marcar Feito somente após confirmação na plataforma; este registro não agenda nem publica artigos automaticamente.',
+        'links'=>[
+            ['titulo'=>'Abrir LinkedIn','url'=>'https://www.linkedin.com/'],
+            ['titulo'=>'Pasta de conteúdo Eduarda Bispo','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Central Editorial no Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-11-27',
+        'ativo_desde'=>'2026-11-27'
+    ],
+    'eduarda-videos-linha-editorial-20261127' => [
+        'hora'=>'16:00',
+        'titulo'=>'Agendar vídeos Duarda & Cleide ou outra pauta editorial de Eduarda Bispo',
+        'area'=>'Eduarda Bispo · Comunicação / Vídeos',
+        'descricao'=>'Selecionar vídeos da linha editorial de Eduarda Bispo, programar nos canais escolhidos e confirmar os agendamentos.',
+        'observacoes'=>'Compromisso pontual para sexta-feira, 27/11/2026, às 16h (horário provisório, não informado). Priorizar vídeos de Duarda & Cleide, ou selecionar outra pauta já aprovada da linha editorial de Eduarda Bispo. Consultar a agenda e os arquivos no Drive; verificar roteiro, edição, legendas, capa, formato, direitos de uso e datas antes de programar. Confirmar os canais de distribuição: Instagram e Facebook de Eduarda Bispo quando pertinentes, sem assumir republicação no GEB ou outros braços sem decisão específica. Registrar na Central Editorial o roteiro e cada canal efetivamente agendado. Marcar Feito somente após conferir os agendamentos; o Painel não publica vídeos nas redes.',
+        'links'=>[
+            ['titulo'=>'Pasta de conteúdo Eduarda Bispo','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Instagram Eduarda Bispo','url'=>'https://www.instagram.com/aeduardabispo'],
+            ['titulo'=>'Facebook Eduarda Bispo','url'=>'https://www.facebook.com/aeduardabispo/'],
+            ['titulo'=>'Central Editorial no Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-11-27',
+        'ativo_desde'=>'2026-11-27'
+    ],
 ];
