@@ -223,4 +223,20 @@ return [
         ],
         'frequencia'=>'unica','data_unica'=>'2026-11-13','ativo_desde'=>'2026-11-13'
     ],
+    'eduarda-bispo-agendar-stories-20261211' => [
+        'hora'=>'14:00',
+        'titulo'=>'Agendar stories de Eduarda Bispo no Instagram e Facebook',
+        'area'=>'Eduarda Bispo · Comunicação / Marketing',
+        'descricao'=>'Preparar, programar e conferir os stories destinados aos perfis de Eduarda Bispo.',
+        'observacoes'=>'Compromisso pontual para 11/12/2026. A solicitação indicou 11/2/2026, data passada em português brasileiro; interpretado como 11/12/2026 por se referir ao próximo agendamento. Horário operacional de 14h provisório, pois não foi informado um horário. Conferir o planejamento e os materiais no Drive; selecionar stories, revisar texto/legendas e dimensões, programar separadamente no Instagram e Facebook e confirmar os dois agendamentos antes de marcar Feito. Registrar na Central Editorial os canais e datas de distribuição. Esta tarefa no Painel não agenda nem publica automaticamente nas redes.',
+        'links'=>[
+            ['titulo'=>'Pasta de conteúdos Eduarda Bispo','url'=>'https://drive.google.com/drive/folders/1xHpQdCDKUa5RCrC6owR-ITu4OI4-eU3M?usp=drive_link'],
+            ['titulo'=>'Instagram Eduarda Bispo','url'=>'https://www.instagram.com/aeduardabispo'],
+            ['titulo'=>'Facebook Eduarda Bispo','url'=>'https://www.facebook.com/aeduardabispo/'],
+            ['titulo'=>'Central Editorial do Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-12-11',
+        'ativo_desde'=>'2026-12-11'
+    ],
 ];
