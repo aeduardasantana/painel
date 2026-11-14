@@ -60,6 +60,8 @@ jobs:
           grep -q "pinterest-planejar-agendar-mes" sistemas/rotinas-catalogo.php
           grep -q "eduarda-bispo-gravar-conteudo-mensal" sistemas/rotinas-catalogo.php
           grep -q "eduarda-bispo-agendar-conteudo-mensal" sistemas/rotinas-catalogo.php
+          grep -q "eduarda-criativos-story-noturno-20261119" sistemas/rotinas-catalogo.php
+          php -r 'require "sistemas/rotinas-recorrencias.php"; $c=require "sistemas/rotinas-catalogo.php"; $t=$c["eduarda-criativos-story-noturno-20261119"]; $tz=new DateTimeZone("America/Sao_Paulo"); $d=fn($s)=>new DateTimeImmutable($s,$tz); if(!pm_scheduled($t,$d("2026-11-19")) || pm_scheduled($t,$d("2026-11-18")) || pm_scheduled($t,$d("2026-11-20")) || pm_scheduled($t,$d("2027-11-19")) || !str_contains($t["links"][0]["url"],"1bt7-_gb39wQ-_iAkzWUmOJn4OvB0WAFQ") || !str_contains($t["observacoes"],"17 a 23/11/2026"))exit(1);'
           grep -q "eduarda-analisar-cortes-anete-20261116" sistemas/rotinas-catalogo.php
           php -r 'require "sistemas/rotinas-recorrencias.php"; $c=require "sistemas/rotinas-catalogo.php"; $t=$c["eduarda-analisar-cortes-anete-20261116"]; $tz=new DateTimeZone("America/Sao_Paulo"); $d=fn($s)=>new DateTimeImmutable($s,$tz); if(!pm_scheduled($t,$d("2026-11-16")) || pm_scheduled($t,$d("2026-11-15")) || pm_scheduled($t,$d("2026-11-17")) || pm_scheduled($t,$d("2027-11-16")) || !str_contains($t["observacoes"],"cortes reais") || !str_contains($t["links"][0]["url"],"youtube.com/aneteguimaraes")) exit(1);'
           grep -q "eduarda-linkedin-benchmarking-20261127" sistemas/rotinas-catalogo.php

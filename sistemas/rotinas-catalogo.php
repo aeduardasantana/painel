@@ -301,4 +301,20 @@ return [
         'data_unica'=>'2026-11-16',
         'ativo_desde'=>'2026-11-16'
     ],
+    'eduarda-criativos-story-noturno-20261119' => [
+        'hora'=>'14:00',
+        'titulo'=>'Criar novos criativos para os stories noturnos de Eduarda Bispo',
+        'area'=>'Eduarda Bispo · Comunicação / Stories',
+        'descricao'=>'Produzir a próxima sequência de peças para os stories noturnos do Instagram e Facebook de Eduarda Bispo.',
+        'observacoes'=>'Compromisso pontual para quinta-feira, 19/11/2026, às 14h (horário provisório). O acervo informado no Drive já contém imagens de stories noturnos datadas de 17 a 23/11/2026, inclusive a peça de 19/11. Portanto, consultar essa sequência e produzir novos criativos complementares para a próxima leva, prioritariamente posterior a 23/11; não duplicar nem substituir os arquivos existentes sem revisão. Manter coerência com a linha editorial autoral e o posicionamento de Eduarda Bispo; revisar escrita, legibilidade no celular, espaço seguro para a interface dos stories, proporção vertical 9:16, créditos e direitos de imagem. Organizar e nomear os novos materiais na pasta correta do Drive, registrar planejamento na Central Editorial e marcar Feito apenas após a produção e conferência dos arquivos. Esta tarefa não pressupõe agendamento nem publicação real no Instagram ou Facebook.',
+        'links'=>[
+            ['titulo'=>'Drive · Stories noturnos de Eduarda Bispo','url'=>'https://drive.google.com/drive/folders/1bt7-_gb39wQ-_iAkzWUmOJn4OvB0WAFQ?usp=drive_link'],
+            ['titulo'=>'Instagram Eduarda Bispo','url'=>'https://www.instagram.com/aeduardabispo'],
+            ['titulo'=>'Facebook Eduarda Bispo','url'=>'https://www.facebook.com/aeduardabispo/'],
+            ['titulo'=>'Central Editorial do Painel','url'=>'https://painel.compassrosesystems.com.br/sistemas/editorial.php'],
+        ],
+        'frequencia'=>'unica',
+        'data_unica'=>'2026-11-19',
+        'ativo_desde'=>'2026-11-19'
+    ],
 ];
