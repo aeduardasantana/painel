@@ -36,6 +36,10 @@ jobs:
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/rotinas.php
           grep -q 'GEB_PORTAL_SESSION_V2' sistemas/editorial.php
           grep -Fq '<FilesMatch "^\.editorial-events\.jsonl$">' sistemas/.htaccess
+          php -l sistemas/catalogo.php
+          php -l sistemas/catalogo-links.php
+          grep -q '/sistemas/catalogo.php' sistemas/index.html
+          php -r '$g=require "sistemas/catalogo-links.php";$ids=array_column($g,"key");foreach(["bracos","lps","sistemas","tecnologias","nr1-regionais"] as $k){if(!in_array($k,$ids,true))exit(1);} $seen=[];foreach($g as $gr){foreach($gr["items"] as $item){$url=$item["url"];if(isset($seen[$url]) || !preg_match("~^(https://|/)~",$url))exit(1);$seen[$url]=true;}} if(count($seen)<85)exit(1);'
           grep -q '/sistemas/editorial.php' sistemas/index.html
           grep -q '/sistemas/editorial.php' sistemas/rotinas.php
           php -r 'require "sistemas/editorial-core.php"; $c=require "sistemas/editorial-config.php"; if(count($c["brands"])<9 || ed_date("2026-11-12")!=="2026-11-12" || ed_load()!==[])exit(1);'
