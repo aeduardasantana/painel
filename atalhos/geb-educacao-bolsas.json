@@ -1,0 +1,14 @@
+{
+  "id": "geb-educacao-lp-bolsas-83",
+  "titulo": "LP — Bolsas de estudo (até 83%)",
+  "unidade": "GEB Educação",
+  "categoria": "Captação educacional",
+  "objetivo": "Consultar bolsas de estudo e registrar solicitações com atendimento por WhatsApp",
+  "rota": "https://gebeducacao.grupoeduardabispo.com.br/bolsas/consultar/",
+  "url_revisao": "https://github.com/aeduardasantana/gebeducacao/pull/1",
+  "status": "em_homologacao",
+  "publicado": false,
+  "acesso_publico_habilitado": false,
+  "incluir_no_menu_principal": false,
+  "observacao": "Ativar atalho público apenas após homologação de formulário, registro no CRM, protocolo e WhatsApp."
+}
